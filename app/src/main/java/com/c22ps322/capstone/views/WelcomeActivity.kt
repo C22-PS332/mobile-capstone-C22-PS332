@@ -1,7 +1,9 @@
 package com.c22ps322.capstone.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import com.c22ps322.capstone.R
 
 class WelcomeActivity : AppCompatActivity() {
