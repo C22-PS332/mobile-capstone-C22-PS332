@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/change_camera_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/change_camera"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/camera_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/cameraX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/camera_x"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/system"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/system"
+                android:textSize="14sp" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/save_camera_setting_btn"
+            style="@style/CustomOrangeIconButton"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/save" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

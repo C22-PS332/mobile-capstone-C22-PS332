@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.c22ps322.capstone.views.home.HomeFragment"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.c22ps322.capstone.views.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.c22ps322.capstone.views.profile.EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.c22ps322.capstone.views.profile.ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.c22ps322.capstone.views.profile.AboutUsFragment"
+        tools:layout="@layout/fragment_about_us" />
+</navigation>
