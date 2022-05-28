@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Capstone Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="capture_image">Ambil Foto</string>
+    <string name="settings">Pengaturan</string>
+    <string name="camera">Kamera</string>
+    <string name="change_camera">Ubah Kamera</string>
+    <string name="change_password">Ubah Password</string>
+    <string name="error_change_password">Password minimal 8 karakter</string>
+    <string name="error_new_password">Password tidak sesuai dengan password baru</string>
+    <string name="old_password">Password Lama</string>
+    <string name="new_password">Password Baru</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="contact_number">Nomor Telepon</string>
+    <string name="email">Email</string>
+    <string name="retype_new_password">Ulangi Password Baru</string>
+    <string name="about_us">Tentang Kami</string>
+    <string name="logout">Logout</string>
+    <string name="my_account">Akun Saya</string>
+    <string name="camera_x">CameraX</string>
+    <string name="save">Simpan</string>
+    <string name="edit_profile">Ubah Profil</string>
+    <string name="error_full_name">Nama lengkap tidak boleh kosong</string>
+    <string name="error_email">Format email belum sesuai</string>
+    <string name="error_contact_number">Nomor tidak boleh kosong</string>
+    <string name="description_about_us">The application is quite simple. Users can either capture or upload an image of food ingredients, then the application will give you some recipes and nutrition information like vitamins, calories, sugar, etc based on prediction of the image. The application was given the trained model from machine learning so it can predict the ingredients. It will also give you warning if the food ingredients are quite dangerous or unhealthy for some children at their ages. From the idea, we hope that parents are more careful about giving their children food, snacks, or the kind of thing which can make their children stunt.</string>
+    <string name="system">System</string>
 </resources>
