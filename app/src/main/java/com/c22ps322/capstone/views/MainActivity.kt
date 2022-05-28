@@ -1,15 +1,13 @@
 package com.c22ps322.capstone.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemReselectedListener {
@@ -27,6 +25,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemReselectedList
 
         setupNavigation()
     }
+
 
     private fun setupNavigation(){
 

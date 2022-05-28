@@ -29,5 +29,14 @@
         <activity
             android:name=".views.MainActivity"
             android:exported="false"/>
+        <activity
+            android:name=".views.profile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.profile.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.profile.AboutUsActivity"
+            android:exported="false" />
     </application>
 </manifest>
