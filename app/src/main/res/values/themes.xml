@@ -9,10 +9,28 @@
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/grey</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/dialog_background</item>
+    </style>
+    
+    <style name="CustomBottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
 
     <style name="CustomOrangeIconButton"
         parent="@style/Widget.MaterialComponents.Button.Icon">
@@ -33,6 +51,8 @@
 
     <style name="CustomWhiteActionBar"
         parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColorPrimary">@color/grey</item>
         <item name="colorPrimary">@color/dark_orange</item>
         <item name="colorOnPrimary">@color/white</item>

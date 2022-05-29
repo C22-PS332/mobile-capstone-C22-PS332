@@ -26,4 +26,7 @@
     <string name="error_contact_number">Nomor tidak boleh kosong</string>
     <string name="description_about_us">The application is quite simple. Users can either capture or upload an image of food ingredients, then the application will give you some recipes and nutrition information like vitamins, calories, sugar, etc based on prediction of the image. The application was given the trained model from machine learning so it can predict the ingredients. It will also give you warning if the food ingredients are quite dangerous or unhealthy for some children at their ages. From the idea, we hope that parents are more careful about giving their children food, snacks, or the kind of thing which can make their children stunt.</string>
     <string name="system">System</string>
+    <string name="failed_to_take_picture">Gagal mengambil foto</string>
+    <string name="failed_to_start_camera">Gagal memulai camera</string>
+    <string name="search_result">Hasil Pencarian</string>
 </resources>
