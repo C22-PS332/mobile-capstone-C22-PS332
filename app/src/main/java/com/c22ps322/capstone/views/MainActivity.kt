@@ -12,7 +12,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
