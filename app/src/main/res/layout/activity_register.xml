@@ -49,6 +49,9 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_medium"
         android:textSize="14sp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:background="@drawable/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_label_tv"
         android:hint="@string/johny_depp" />
@@ -72,6 +75,9 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_medium"
         android:textSize="14sp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:background="@drawable/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/telp_label_tv"
         android:hint="@string/_6581111111111" />
@@ -95,6 +101,9 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_medium"
         android:textSize="14sp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:background="@drawable/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_label_tv"
         android:hint="@string/xxxxx123_email_com" />
@@ -118,6 +127,9 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_medium"
         android:textSize="14sp"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:background="@drawable/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_label_tv"
         android:hint="@string/password_hint" />
@@ -130,6 +142,9 @@
         android:fontFamily="@font/poppins_medium"
         android:textSize="14sp"
         android:text="@string/daftar"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        android:background="@drawable/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_et" />
 
