@@ -6,16 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.c22ps322.capstone.adapters.ListRecipeAdapter
 import com.c22ps322.capstone.databinding.FragmentResultSheetBinding
+import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.utils.OnItemCallbackInterface
+import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.R
+
 
 class ResultSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentResultSheetBinding? = null
 
     private val binding get() = _binding
+
+    private var listRecipe: ArrayList<DummyRecipe>? = arrayListOf()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            listRecipe = it.getParcelableArrayList(ARG_PARAM)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +45,20 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.ivClose?.setOnClickListener { this.dismiss() }
+
+        setupRecipeList()
+    }
+
+    private fun setupRecipeList() {
+        val listRecipeAdapter = ListRecipeAdapter()
+
+        listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<DummyRecipe>{
+            override fun onClick(item: DummyRecipe) {}
+        }
+
+        binding?.recipeList?.adapter = listRecipeAdapter
+
+        listRecipeAdapter.submitList(listRecipe)
     }
 
     override fun onStart() {
@@ -83,8 +111,14 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
+        private const val ARG_PARAM = "list-recipe"
+
         @JvmStatic
-        fun newInstance() =
-            ResultSheetFragment()
+        fun newInstance(listRecipe: ArrayList<DummyRecipe>) =
+            ResultSheetFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelableArrayList(ARG_PARAM, listRecipe)
+                }
+            }
     }
 }

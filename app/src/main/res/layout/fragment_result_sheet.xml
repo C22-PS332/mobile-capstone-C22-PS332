@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/result_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,12 +16,12 @@
             android:id="@+id/title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
             android:gravity="center_horizontal"
             android:padding="10dp"
             android:text="@string/search_result"
-            android:textSize="16sp"
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_bold"/>
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iv_close"
@@ -33,11 +34,11 @@
 
     </RelativeLayout>
 
-    <ScrollView
-        android:id="@+id/layout_fragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipe_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

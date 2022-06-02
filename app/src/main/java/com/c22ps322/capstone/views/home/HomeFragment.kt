@@ -12,15 +12,27 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.FragmentHomeBinding
+import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.createFile
+import com.c22ps322.capstone.viewmodels.ListRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSavedCallback {
+
+    private val listRecipeViewModel by viewModels<ListRecipeViewModel>()
 
     private lateinit var cameraExecutor: ExecutorService
 
@@ -31,6 +43,8 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding
+
+    private var uploadJob: Job = Job()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +107,8 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
         _binding = null
 
         cameraExecutor.shutdown()
+
+        if (uploadJob.isActive) uploadJob.cancel()
     }
 
     override fun onClick(v: View) {
@@ -107,24 +123,57 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
         animateButton()
 
-//        val imageCapture = imageCapture ?: return
-//
-//        val photoFile = createFile(requireActivity().application)
-//
-//        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-//
-//        imageCapture.takePicture(
-//            outputOptions,
-//            ContextCompat.getMainExecutor(requireContext()),
-//            this
-//        )
+        val imageCapture = imageCapture ?: return
 
-        showResultSheet()
+        val photoFile = createFile(requireActivity().application)
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(requireContext()),
+            this
+        )
+
+        uploadImage(photoFile)
     }
 
-    private fun showResultSheet() {
+    private fun uploadImage(file: File){
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            if (uploadJob.isActive) uploadJob.cancel()
+
+            uploadJob = launch {
+
+                val uploadFlow = listRecipeViewModel.uploadImage(file)
+
+                uploadFlow.collect{ result ->
+                    when (result) {
+                        is NetworkResult.Loading -> {}
+
+                        is NetworkResult.Success -> {
+                            showResultSheet(result.data)
+                        }
+
+                        is NetworkResult.Error -> {
+
+                            binding?.root?.let {
+                                Snackbar.make(
+                                    it,
+                                    result.message,
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showResultSheet(listRecipe: ArrayList<DummyRecipe>) {
         childFragmentManager.findFragmentByTag("ResultSheetFragment")
-            ?: ResultSheetFragment.newInstance().show(childFragmentManager, "ResultSheetFragment")
+            ?: ResultSheetFragment.newInstance(listRecipe).show(childFragmentManager, "ResultSheetFragment")
     }
 
     private fun animateButton() {
