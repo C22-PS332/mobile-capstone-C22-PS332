@@ -60,7 +60,7 @@
     </style>
 
     <style name="AppTheme.DrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/dark_orange</item>
+        <item name="color">@color/grey</item>
     </style>
 
     <style name="CustomLabelEditText" parent="TextAppearance.Design.Hint">
