@@ -1,11 +1,8 @@
 package com.c22ps322.capstone.models.edamam
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
 data class NTRCode(
-
     @Json(name="label")
     val label: String,
 
