@@ -1,6 +1,7 @@
 package com.c22ps322.capstone.views.home
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.c22ps322.capstone.adapters.ListRecipeAdapter
 import com.c22ps322.capstone.databinding.FragmentResultSheetBinding
 import com.c22ps322.capstone.models.domain.DummyRecipe
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
+import com.c22ps322.capstone.views.DetailFoodActivity
 import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -53,7 +55,13 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
         val listRecipeAdapter = ListRecipeAdapter()
 
         listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<DummyRecipe>{
-            override fun onClick(item: DummyRecipe) {}
+            override fun onClick(item: DummyRecipe) {
+                val intent = Intent(requireContext(), DetailFoodActivity::class.java)
+
+                intent.putExtra(DetailFoodActivity.RECIPE_PARAM, item)
+
+                startActivity(intent)
+            }
         }
 
         binding?.recipeList?.adapter = listRecipeAdapter
