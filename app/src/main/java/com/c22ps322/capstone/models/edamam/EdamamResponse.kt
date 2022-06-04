@@ -6,13 +6,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class EdamamResponse(
 	@Json(name="totalWeight")
-	val totalWeight: Double? = null,
+	val totalWeight: Double,
 
 	@Json(name="totalDaily")
-	val totalDaily: TotalDaily? = null,
+	val totalDaily: TotalDaily,
 
 	@Json(name="calories")
-	val calories: Int? = null,
+	val calories: Int,
 )
 
 
