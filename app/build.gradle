@@ -17,6 +17,10 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "EDAMAM_API_KEY", '"YOUR_API_KEY_HERE"')
+        buildConfigField("String", "EDAMAM_APP_ID", '"YOUR_APP_ID_HERE"')
+
     }
 
     buildTypes {

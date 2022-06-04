@@ -29,4 +29,14 @@
     <string name="failed_to_take_picture">Gagal mengambil foto</string>
     <string name="failed_to_start_camera">Gagal memulai camera</string>
     <string name="search_result">Hasil Pencarian</string>
+    <string name="recipe">Resep</string>
+    <string name="nutrition">Gizi</string>
+    <string name="back">Kembali</string>
+    <string name="recommended_dietary_allowance">AKG</string>
+    <string name="percentage">Persen</string>
+    <string name="percentage_placeholder">%1$s %2$s</string>
+    <string name="no_data">no data</string>
+    <string name="amount_per_serving_calories">Jumlah kalori per sajian</string>
+    <string name="total_weight">Berat total</string>
+    <string name="error_loading_data">Error Loading Data</string>
 </resources>

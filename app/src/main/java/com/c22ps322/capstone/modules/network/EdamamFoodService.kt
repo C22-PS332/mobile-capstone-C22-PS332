@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface EdamamFoodService {
 
     @POST("nutrition-details")
-    fun getNutrition(
+    suspend fun getNutrition(
         @Query("app_id") appId: String,
         @Query("app_key") appKey: String,
         @Body param: RequestBody
