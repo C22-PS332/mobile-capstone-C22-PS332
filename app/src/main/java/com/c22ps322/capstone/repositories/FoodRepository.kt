@@ -33,7 +33,7 @@ class FoodRepository @Inject constructor(
                     "Soto",
                     "Ini adalah soto",
                     "https://awsimages.detik.net.id/community/media/visual/2021/12/14/resep-soto-ayam-jawa_43.jpeg?w=700&q=90",
-                    listOf()
+                    arrayListOf("1 cup rice", "10 oz chickpeas")
                 )
             )
         }
@@ -56,7 +56,19 @@ class FoodRepository @Inject constructor(
                 foodMapper.toJson(EdamamRequestParam(ingredients))
             )
 
-            emit(NetworkResult.Success(response.body()!!))
+            when(response.code()){
+                200 -> emit(NetworkResult.Success(response.body()!!))
+
+                401 -> emit(NetworkResult.Error("Unauthorized"))
+
+                404 -> emit(NetworkResult.Error("The specified URL was not found or couldn't be retrieved"))
+
+                409 -> emit(NetworkResult.Error("The provided ETag token does not match the input data"))
+
+                422 -> emit(NetworkResult.Error("Couldn't parse the recipe or extract the nutritional info"))
+
+                555 -> emit(NetworkResult.Error("Recipe with insufficient quality to process correctly"))
+            }
 
         } catch (e: Exception) {
 
