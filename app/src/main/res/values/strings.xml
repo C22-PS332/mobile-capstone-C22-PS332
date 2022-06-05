@@ -47,4 +47,14 @@
     <string name="_6581111111111">6581111111111</string>
     <string name="sudah_punya_akun">Sudah punya akun?</string>
     <string name="masuk_sekarang">Masuk Sekarang</string>
+    <string name="recipe">Resep</string>
+    <string name="nutrition">Gizi</string>
+    <string name="back">Kembali</string>
+    <string name="recommended_dietary_allowance">AKG</string>
+    <string name="percentage">Persen</string>
+    <string name="percentage_placeholder">%1$s %2$s</string>
+    <string name="no_data">no data</string>
+    <string name="amount_per_serving_calories">Jumlah kalori per sajian</string>
+    <string name="total_weight">Berat total</string>
+    <string name="error_loading_data">Error Loading Data</string>
 </resources>
