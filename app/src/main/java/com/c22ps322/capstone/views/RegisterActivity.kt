@@ -73,6 +73,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.loginNowTv.setOnClickListener {
             val loginIntent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(loginIntent)
+            finish()
         }
 
         // add listener for post register

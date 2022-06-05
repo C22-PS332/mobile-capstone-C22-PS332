@@ -16,11 +16,13 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        val button = findViewById<Button>(R.id.button)
+//        val button = findViewById<Button>(R.id.button)
+//
+//        button.setOnClickListener {
+//            requestCameraPermission()
+//        }
 
-        button.setOnClickListener {
-            requestCameraPermission()
-        }
+        requestCameraPermission()
     }
 
     private fun requestCameraPermission(){
@@ -31,9 +33,9 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
-        val intent = Intent(this, LoginActivity::class.java)
-
-        startActivity(intent)
+//        val intent = Intent(this, LoginActivity::class.java)
+//
+//        startActivity(intent)
     }
 
     private val requestPermission =
