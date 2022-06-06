@@ -2,11 +2,16 @@ package com.c22ps322.capstone.views
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.c22ps322.capstone.R
+import com.c22ps322.capstone.adapters.ListIngredientAdapter
 import com.c22ps322.capstone.adapters.RecipeTabAdapter
 import com.c22ps322.capstone.databinding.ActivityDetailFoodBinding
-import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.spoonacular.ExtendedIngredientsItem
+import com.c22ps322.capstone.models.spoonacular.SpoonacularResponse
+import com.c22ps322.capstone.utils.OnItemCallbackInterface
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailFoodActivity : AppCompatActivity() {
 
-    private lateinit var dummyRecipe: DummyRecipe
+    private lateinit var sponaacularRecipe: SpoonacularResponse
 
     private lateinit var binding: ActivityDetailFoodBinding
 
@@ -25,7 +30,8 @@ class DetailFoodActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        dummyRecipe = intent.getParcelableExtra<DummyRecipe>(RECIPE_PARAM) as DummyRecipe
+        sponaacularRecipe =
+            intent.getParcelableExtra<SpoonacularResponse>(RECIPE_PARAM) as SpoonacularResponse
 
         setupNavigation()
 
@@ -35,17 +41,45 @@ class DetailFoodActivity : AppCompatActivity() {
     }
 
     private fun bindRecipeToActivity() {
-        binding.apply {
-            recipeTitleTv.text = dummyRecipe.title
 
-            recipeDescTv.text = dummyRecipe.desc
+        val listIngredientAdapter = ListIngredientAdapter()
+
+        listIngredientAdapter.onItemCallbackInterface =
+            object : OnItemCallbackInterface<ExtendedIngredientsItem> {
+                override fun onClick(item: ExtendedIngredientsItem) {
+                    Snackbar.make(
+                        binding.root,
+                        item.name,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        listIngredientAdapter.submitList(sponaacularRecipe.extendedIngredients)
+
+        binding.apply {
+            recipeTitleTv.text = sponaacularRecipe.title
+
+            recipeDescTv.text = sponaacularRecipe.creditsText
+
+            timeTv.text = getString(
+                R.string.percentage_placeholder,
+                sponaacularRecipe.readyInMinutes.toString(),
+                "min"
+            )
+
+            ingredientList.layoutManager =
+                LinearLayoutManager(this@DetailFoodActivity, LinearLayoutManager.HORIZONTAL, false)
+
+            ingredientList.adapter = listIngredientAdapter
         }
 
         Glide.with(this)
-            .load(dummyRecipe.imageUrl)
+            .load(sponaacularRecipe.image)
             .centerCrop()
             .placeholder(R.drawable.ic_baseline_broken_image_24)
             .into(binding.recipeImg)
+
     }
 
     private fun setupNavigation() {
@@ -67,13 +101,18 @@ class DetailFoodActivity : AppCompatActivity() {
 
     private fun setupTabLayout() {
 
-        val recipeTabAdapter = RecipeTabAdapter(this, dummyRecipe.ingredients)
+        val recipeTabAdapter = RecipeTabAdapter(
+            this,
+            sponaacularRecipe.summary,
+            sponaacularRecipe.sourceUrl,
+            sponaacularRecipe.nutrition
+        )
 
         binding.apply {
             pager.adapter = recipeTabAdapter
 
-            TabLayoutMediator(tabLayout, pager){ tab, pos ->
-                tab.text = when(pos){
+            TabLayoutMediator(tabLayout, pager) { tab, pos ->
+                tab.text = when (pos) {
                     0 -> getString(R.string.recipe)
                     else -> getString(R.string.nutrition)
                 }
