@@ -8,16 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.c22ps322.capstone.adapters.ListRecipeAdapter
 import com.c22ps322.capstone.databinding.FragmentResultSheetBinding
 import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
+import com.c22ps322.capstone.viewmodels.RecipeInformationViewModel
 import com.c22ps322.capstone.views.DetailFoodActivity
-import com.google.android.material.R
+import com.c22ps322.capstone.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ResultSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentResultSheetBinding? = null
@@ -25,6 +33,10 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding
 
     private var listRecipe: ArrayList<DummyRecipe>? = arrayListOf()
+
+    private val recipeInformationViewModel by viewModels<RecipeInformationViewModel>()
+
+    private var detailJob: Job = Job()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +78,55 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
         listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<DummyRecipe> {
             override fun onClick(item: DummyRecipe) {
-                val intent = Intent(requireContext(), DetailFoodActivity::class.java)
 
-                intent.putExtra(DetailFoodActivity.RECIPE_PARAM, item)
+                if (detailJob.isActive) detailJob.cancel()
 
-                startActivity(intent)
+                viewLifecycleOwner.lifecycleScope.launch {
+
+                    detailJob = launch {
+                        val detailFlow = recipeInformationViewModel.getRecipeInformation(item.id)
+
+                        detailFlow.collect { result ->
+                            when (result) {
+                                is NetworkResult.Loading -> {
+                                    binding?.errorTv?.isVisible = false
+
+                                    binding?.progressHorizontal?.isVisible = true
+                                }
+
+                                is NetworkResult.Success -> {
+                                    binding?.errorTv?.isVisible = false
+
+                                    binding?.progressHorizontal?.hide()
+
+                                    val intent =
+                                        Intent(requireContext(), DetailFoodActivity::class.java)
+
+                                    intent.putExtra(DetailFoodActivity.RECIPE_PARAM, result.data)
+
+                                    startActivity(intent)
+                                }
+
+                                is NetworkResult.Error -> {
+
+                                    binding?.errorTv?.text = getString(R.string.error_loading_data)
+
+                                    binding?.errorTv?.isVisible = true
+
+                                    binding?.progressHorizontal?.hide()
+
+                                    binding?.root?.let {
+                                        Snackbar.make(
+                                            it,
+                                            result.message,
+                                            Snackbar.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -82,7 +138,8 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        val view: FrameLayout = dialog?.findViewById(R.id.design_bottom_sheet)!!
+        val view: FrameLayout =
+            dialog?.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
 
         view.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 

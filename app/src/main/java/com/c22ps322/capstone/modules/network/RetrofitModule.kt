@@ -2,6 +2,7 @@ package com.c22ps322.capstone.modules.network
 
 import com.c22ps322.capstone.modules.DomainRetrofit
 import com.c22ps322.capstone.modules.EdamamRetrofit
+import com.c22ps322.capstone.modules.SpoonacularRetrofit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -53,7 +54,17 @@ object RetrofitModule {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(client)
 
+    @SpoonacularRetrofit
+    @Singleton
+    @Provides
+    fun providesSpoonacularRetrofit(moshi: Moshi, client: OkHttpClient): Retrofit.Builder = Retrofit.Builder()
+        .baseUrl(SPOONACULAR_API_URL)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .client(client)
+
     private const val DOMAIN_API_URL = "https://api-url/"
 
     private const val EDAMAM_API_URL = "https://api.edamam.com/api/"
+
+    private const val SPOONACULAR_API_URL = "https://api.spoonacular.com/"
 }

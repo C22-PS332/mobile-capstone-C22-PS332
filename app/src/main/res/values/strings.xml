@@ -57,4 +57,7 @@
     <string name="amount_per_serving_calories">Jumlah kalori per sajian</string>
     <string name="total_weight">Berat total</string>
     <string name="error_loading_data">Error Loading Data</string>
+    <string name="amount">Jumlah</string>
+    <string name="more_detail">Detail selengkapnya</string>
+    <string name="ingredients">Bahan</string>
 </resources>
