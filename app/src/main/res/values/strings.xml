@@ -60,4 +60,8 @@
     <string name="title_menu_1">Title menu 1</string>
     <string name="desc_menu_1">Desc menu 1</string>
     <string name="get_started">Get Started</string>
+    <string name="title_menu_2">Title menu 2</string>
+    <string name="desc_menu_2">Desc menu 2</string>
+    <string name="title_menu_3">Title menu 3</string>
+    <string name="desc_menu_3">Desc menu 3</string>
 </resources>
