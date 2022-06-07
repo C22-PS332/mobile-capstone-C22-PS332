@@ -12,10 +12,8 @@ import androidx.fragment.app.Fragment
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.FragmentNutritionBinding
 import com.c22ps322.capstone.models.spoonacular.Nutrition
-import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
 
-@AndroidEntryPoint
 class NutritionFragment : Fragment() {
 
     private var _binding: FragmentNutritionBinding? = null
