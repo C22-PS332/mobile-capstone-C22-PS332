@@ -2,9 +2,7 @@ package com.c22ps322.capstone.views.component
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.c22ps322.capstone.R
 import com.google.android.material.textfield.TextInputEditText
