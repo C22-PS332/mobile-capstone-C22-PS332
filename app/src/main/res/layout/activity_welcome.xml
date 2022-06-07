@@ -1,18 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.WelcomeActivity">
+    tools:context=".views.WelcomeActivity"
+    android:background="@drawable/welcome"
+    app:layoutDescription="@xml/activity_welcome_scene">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/welcome_icon"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:foregroundGravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/burger" />
+
+    <TextView
+        style="@style/WelcomeTitle"
+        android:id="@+id/titleMenu1"
+        android:text="@string/title_menu_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <TextView
+        style="@style/WelcomeDesc"
+        android:id="@+id/descMenu1"
+        android:text="@string/desc_menu_1"
+        app:layout_constraintEnd_toEndOf="@+id/titleMenu1"
+        app:layout_constraintStart_toStartOf="@+id/titleMenu1"
+        app:layout_constraintTop_toBottomOf="@+id/titleMenu1" />
+
+    <TextView
+        android:id="@+id/titleMenu2"
+        style="@style/WelcomeTitle"
+        android:text="@string/title_menu_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <TextView
+        style="@style/WelcomeDesc"
+        android:id="@+id/descMenu2"
+        android:text="@string/desc_menu_2"
+        app:layout_constraintEnd_toEndOf="@+id/titleMenu2"
+        app:layout_constraintStart_toStartOf="@+id/titleMenu2"
+        app:layout_constraintTop_toBottomOf="@+id/titleMenu2" />
+
+    <TextView
+        style="@style/WelcomeTitle"
+        android:id="@+id/titleMenu3"
+        android:text="@string/title_menu_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <TextView
+        style="@style/WelcomeDesc"
+        android:id="@+id/descMenu3"
+        android:text="@string/desc_menu_3"
+        app:layout_constraintEnd_toEndOf="@+id/titleMenu3"
+        app:layout_constraintStart_toStartOf="@+id/titleMenu3"
+        app:layout_constraintTop_toBottomOf="@+id/titleMenu3" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/menu1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintWidth_percent="1"
+        app:altSrc="@drawable/ic_circle_full_24"
+        app:srcCompat="@drawable/ic_circle_24"
+        app:layout_constraintEnd_toStartOf="@id/menu2"
+        app:layout_constraintTop_toBottomOf="@id/descMenu1"
+        app:tint="@color/dark_orange" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/menu2"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:altSrc="@drawable/ic_circle_full_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descMenu3"
+        app:srcCompat="@drawable/ic_circle_24"
+        app:tint="@color/dark_orange" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/menu3"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:altSrc="@drawable/ic_circle_full_24"
+        app:srcCompat="@drawable/ic_circle_24"
+        app:layout_constraintStart_toEndOf="@id/menu2"
+        app:layout_constraintTop_toBottomOf="@id/descMenu3"
+        app:tint="@color/dark_orange" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:alpha="0"
+        android:background="@drawable/background"
+        android:backgroundTint="@color/dark_orange"
+        android:text="@string/get_started"
+        app:layout_constraintTop_toBottomOf="@+id/descMenu3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

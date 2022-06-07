@@ -52,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
         binding.registerNowTv.setOnClickListener {
             val regIntent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(regIntent)
+            finish()
         }
 
         // add listener for login
