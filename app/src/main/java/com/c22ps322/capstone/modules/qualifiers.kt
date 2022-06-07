@@ -4,10 +4,6 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class EdamamRetrofit
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
 annotation class DomainRetrofit
 
 @Qualifier
