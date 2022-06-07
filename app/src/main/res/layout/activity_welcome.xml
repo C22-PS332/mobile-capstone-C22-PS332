@@ -26,88 +26,49 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/WelcomeTitle"
         android:id="@+id/titleMenu1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="center_horizontal"
         android:text="@string/title_menu_1"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
     <TextView
+        style="@style/WelcomeDesc"
         android:id="@+id/descMenu1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:gravity="center_horizontal"
         android:text="@string/desc_menu_1"
-        android:textSize="16sp"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="@+id/titleMenu1"
         app:layout_constraintStart_toStartOf="@+id/titleMenu1"
         app:layout_constraintTop_toBottomOf="@+id/titleMenu1" />
 
     <TextView
+        style="@style/WelcomeTitle"
         android:id="@+id/titleMenu2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="center_horizontal"
         android:text="@string/title_menu_2"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
     <TextView
+        style="@style/WelcomeDesc"
         android:id="@+id/descMenu2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:gravity="center_horizontal"
         android:text="@string/desc_menu_2"
-        android:textSize="16sp"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="@+id/titleMenu2"
         app:layout_constraintStart_toStartOf="@+id/titleMenu2"
         app:layout_constraintTop_toBottomOf="@+id/titleMenu2" />
 
     <TextView
+        style="@style/WelcomeTitle"
         android:id="@+id/titleMenu3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="center_horizontal"
         android:text="@string/title_menu_3"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
     <TextView
+        style="@style/WelcomeDesc"
         android:id="@+id/descMenu3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:gravity="center_horizontal"
         android:text="@string/desc_menu_3"
-        android:textSize="16sp"
-        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="@+id/titleMenu3"
         app:layout_constraintStart_toStartOf="@+id/titleMenu3"
         app:layout_constraintTop_toBottomOf="@+id/titleMenu3" />
@@ -120,7 +81,6 @@
         app:srcCompat="@drawable/ic_circle_24"
         app:layout_constraintEnd_toStartOf="@id/menu2"
         app:layout_constraintTop_toBottomOf="@id/descMenu1"
-        android:layout_marginBottom="15dp"
         app:tint="@color/dark_orange" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
@@ -142,7 +102,6 @@
         app:srcCompat="@drawable/ic_circle_24"
         app:layout_constraintStart_toEndOf="@id/menu2"
         app:layout_constraintTop_toBottomOf="@id/descMenu3"
-        android:layout_marginBottom="15dp"
         app:tint="@color/dark_orange" />
 
     <Button
