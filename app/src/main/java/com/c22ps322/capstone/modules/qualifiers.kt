@@ -4,8 +4,8 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class EdamamRetrofit
+annotation class DomainRetrofit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class DomainRetrofit
+annotation class SpoonacularRetrofit

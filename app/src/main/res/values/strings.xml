@@ -64,4 +64,7 @@
     <string name="desc_menu_2">Lorem ipsum dolor sit amesadatat, asdconsectetur adipiscing elit.</string>
     <string name="title_menu_3">Let\'s Have a Healthier Life With Us</string>
     <string name="desc_menu_3">Lorem ipsum dolor sit amesadatat, asdconsectetur adipiscing elit.</string>
+    <string name="amount">Jumlah</string>
+    <string name="more_detail">Detail selengkapnya</string>
+    <string name="ingredients">Bahan</string>
 </resources>
