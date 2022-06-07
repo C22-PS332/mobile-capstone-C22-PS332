@@ -5,25 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.WelcomeActivity"
-    android:background="@drawable/welcome_background"
+    android:background="@drawable/welcome"
     app:layoutDescription="@xml/activity_welcome_scene">
-
-    <View
-        android:id="@+id/union"
-        android:layout_width="match_parent"
-        android:layout_height="375dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/union"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/welcome_icon"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/burger"
+        android:layout_height="100dp"
+        android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/burger" />
 
     <TextView
         style="@style/WelcomeTitle"
@@ -42,8 +35,8 @@
         app:layout_constraintTop_toBottomOf="@+id/titleMenu1" />
 
     <TextView
-        style="@style/WelcomeTitle"
         android:id="@+id/titleMenu2"
+        style="@style/WelcomeTitle"
         android:text="@string/title_menu_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +70,7 @@
         android:id="@+id/menu1"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        app:layout_constraintWidth_percent="1"
         app:altSrc="@drawable/ic_circle_full_24"
         app:srcCompat="@drawable/ic_circle_24"
         app:layout_constraintEnd_toStartOf="@id/menu2"
