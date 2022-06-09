@@ -1,26 +1,38 @@
 package com.c22ps322.capstone.views.profile
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.c22ps322.capstone.R
+import com.c22ps322.capstone.databinding.CameraSettingDialogBinding
 import com.c22ps322.capstone.databinding.FragmentProfileBinding
+import com.c22ps322.capstone.models.enums.CameraOption
+import com.c22ps322.capstone.viewmodels.SettingViewModel
 import com.c22ps322.capstone.views.WelcomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
 
-    private var _binding: FragmentProfileBinding ?= null
+    private var _binding: FragmentProfileBinding? = null
 
     private val binding get() = _binding
 
     private lateinit var navController: NavController
+
+    private lateinit var cameraOption: String
+
+    private lateinit var dialog: Dialog
+
+    private val settingViewModel by viewModels<SettingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +47,17 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadSettings()
+
         setupNavigation()
+    }
+
+    private fun loadSettings() {
+        settingViewModel.getCameraOption().observe(viewLifecycleOwner) {
+            cameraOption = it
+
+            binding?.cameraSelectedTv?.text = it
+        }
     }
 
     private fun setupNavigation() {
@@ -58,25 +80,38 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
-    override fun onClick(v: View?) {
-        v?.let {
+    override fun onClick(v: View) {
+        when (v.id) {
 
-            when(it.id){
+            R.id.camera_setting_btn -> showCameraSettingDialog()
 
-                R.id.camera_setting_btn -> showCameraSettingDialog()
+            R.id.edit_account_btn -> navController.navigate(
+                R.id.action_profileFragment_to_editProfileFragment,
+                null
+            )
 
-                R.id.edit_account_btn -> navController.navigate(R.id.action_profileFragment_to_editProfileFragment, null)
+            R.id.change_password_btn -> navController.navigate(
+                R.id.action_profileFragment_to_changePasswordFragment,
+                null
+            )
 
-                R.id.change_password_btn -> navController.navigate(R.id.action_profileFragment_to_changePasswordFragment, null)
+            R.id.about_us_btn -> navController.navigate(
+                R.id.action_profileFragment_to_aboutUsFragment,
+                null
+            )
 
-                R.id.about_us_btn -> navController.navigate(R.id.action_profileFragment_to_aboutUsFragment, null)
+            R.id.save_camera_setting_btn -> {
+                updateCameraPreference()
 
-                R.id.log_out_btn -> navigateToFirstScreen()
-
-                else -> return
+                dialog.dismiss()
             }
+
+            R.id.log_out_btn -> navigateToFirstScreen()
+
+            else -> return
         }
     }
+
 
     private fun navigateToFirstScreen() {
         val intent = Intent(requireContext(), WelcomeActivity::class.java)
@@ -89,12 +124,36 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showCameraSettingDialog() {
-        val dialog = AlertDialog.Builder(requireContext(), R.style.CustomRoundedAlertDialog)
+        val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.CustomRoundedAlertDialog)
 
-        val dialogView = layoutInflater.inflate(R.layout.camera_setting_dialog, null)
+        val dialogView = CameraSettingDialogBinding.inflate(layoutInflater)
 
-        dialog.setView(dialogView)
+        dialogBuilder.setView(dialogView.root)
+
+        dialogView.saveCameraSettingBtn.setOnClickListener(this)
+
+        when (cameraOption) {
+            CameraOption.CAMERA_X -> dialogView.cameraX.isChecked =
+                true
+
+            CameraOption.SYSTEM -> dialogView.system.isChecked =
+                true
+        }
+
+        dialogView.cameraOption.setOnCheckedChangeListener { _, id ->
+            cameraOption = when (id) {
+                R.id.cameraX -> CameraOption.CAMERA_X
+
+                else -> CameraOption.SYSTEM
+            }
+        }
+
+        dialog = dialogBuilder.create()
 
         dialog.show()
+    }
+
+    private fun updateCameraPreference() {
+        settingViewModel.saveCameraOption(cameraOption)
     }
 }
