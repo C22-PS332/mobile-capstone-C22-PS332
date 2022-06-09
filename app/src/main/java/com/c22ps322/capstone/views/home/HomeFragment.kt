@@ -1,25 +1,36 @@
 package com.c22ps322.capstone.views.home
 
 import android.animation.ObjectAnimator
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.FragmentHomeBinding
 import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.enums.CameraOption
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.createFile
+import com.c22ps322.capstone.utils.createTempFile
+import com.c22ps322.capstone.utils.uriToFile
 import com.c22ps322.capstone.viewmodels.ListRecipeViewModel
+import com.c22ps322.capstone.viewmodels.SettingViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -34,7 +45,9 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
     private val listRecipeViewModel by viewModels<ListRecipeViewModel>()
 
-    private lateinit var cameraExecutor: ExecutorService
+    private val settingViewModel by viewModels<SettingViewModel>()
+
+    private var cameraExecutor: ExecutorService? = null
 
     private var imageCapture: ImageCapture? = null
 
@@ -43,6 +56,8 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding
+
+    private lateinit var imagePath: String
 
     private var uploadJob: Job = Job()
 
@@ -58,11 +73,47 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.captureBtn?.setOnClickListener(this)
+        loadSettings()
+    }
 
-        startCameraX()
+    private fun loadSettings() {
+        settingViewModel.getCameraOption().observe(viewLifecycleOwner) { setupCamera(it) }
+    }
 
-        cameraExecutor = Executors.newSingleThreadExecutor()
+    private fun setupCamera(cameraOption: String) {
+        when (cameraOption) {
+            CameraOption.CAMERA_X -> {
+
+                binding?.apply {
+                    captureBtn.isVisible = true
+
+                    viewFinder.isVisible = true
+
+                    openSystemCameraBtn.isVisible = false
+
+                    captureBtn.setOnClickListener(this@HomeFragment)
+                }
+
+                startCameraX()
+
+                cameraExecutor = Executors.newSingleThreadExecutor()
+            }
+
+            CameraOption.SYSTEM -> {
+
+                binding?.apply {
+                    captureBtn.isVisible = false
+
+                    viewFinder.isVisible = false
+
+                    openSystemCameraBtn.isVisible = true
+
+                    openSystemCameraBtn.setOnClickListener(this@HomeFragment)
+                }
+            }
+
+            else -> return
+        }
     }
 
     private fun startCameraX() {
@@ -106,7 +157,7 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
         _binding = null
 
-        cameraExecutor.shutdown()
+        cameraExecutor?.shutdown()
 
         if (uploadJob.isActive) uploadJob.cancel()
     }
@@ -115,7 +166,43 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
         when (v.id) {
             R.id.capture_btn -> takePhoto()
 
+            R.id.open_system_camera_btn -> openCameraSystem()
+
             else -> return
+        }
+    }
+
+    private fun openCameraSystem() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        val packageManager = activity?.packageManager
+
+        packageManager?.let {
+            intent.resolveActivity(it)
+
+            createTempFile(requireContext()).also { file ->
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    requireActivity(),
+                    "com.c22ps322.capstone",
+                    file
+                )
+                imagePath = file.absolutePath
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+
+                launcherIntentCamera.launch(intent)
+            }
+        }
+    }
+
+    private val launcherIntentCamera = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == RESULT_OK) {
+
+            val file = File(imagePath)
+
+            uploadImage(file)
         }
     }
 
@@ -134,11 +221,16 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
             ContextCompat.getMainExecutor(requireContext()),
             this
         )
-
-        uploadImage(photoFile)
     }
 
-    private fun uploadImage(file: File){
+    private fun uploadImage(file: File) {
+        binding?.root?.let {
+            Snackbar.make(
+                it,
+                getString(R.string.capture_successfull),
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             if (uploadJob.isActive) uploadJob.cancel()
@@ -147,15 +239,21 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
                 val uploadFlow = listRecipeViewModel.uploadImage(file)
 
-                uploadFlow.collect{ result ->
+                uploadFlow.collect { result ->
                     when (result) {
-                        is NetworkResult.Loading -> {}
+                        is NetworkResult.Loading -> {
+                            binding?.progressHorizontal?.isVisible = true
+                        }
 
                         is NetworkResult.Success -> {
+
+                            binding?.progressHorizontal?.hide()
+
                             showResultSheet(result.data)
                         }
 
                         is NetworkResult.Error -> {
+                            binding?.progressHorizontal?.hide()
 
                             binding?.root?.let {
                                 Snackbar.make(
@@ -173,7 +271,8 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
     private fun showResultSheet(listRecipe: ArrayList<DummyRecipe>) {
         childFragmentManager.findFragmentByTag("ResultSheetFragment")
-            ?: ResultSheetFragment.newInstance(listRecipe).show(childFragmentManager, "ResultSheetFragment")
+            ?: ResultSheetFragment.newInstance(listRecipe)
+                .show(childFragmentManager, "ResultSheetFragment")
     }
 
     private fun animateButton() {
@@ -183,7 +282,14 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
         }
     }
 
-    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {}
+    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+
+        val savedUri = outputFileResults.savedUri ?: return
+
+        val file = uriToFile(savedUri, requireContext())
+
+        uploadImage(file)
+    }
 
     override fun onError(exception: ImageCaptureException) {
         binding?.root?.let {
