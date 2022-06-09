@@ -53,7 +53,7 @@ object RetrofitModule {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(client)
 
-    private const val DOMAIN_API_URL = "https://api-url/"
+    private const val DOMAIN_API_URL = "https://capstone-backend-vm27eldwkq-uc.a.run.app/api/"
 
     private const val SPOONACULAR_API_URL = "https://api.spoonacular.com/"
 }
