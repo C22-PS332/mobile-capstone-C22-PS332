@@ -1,5 +1,6 @@
 package com.c22ps322.capstone.repositories
 
+import android.content.SharedPreferences
 import com.c22ps322.capstone.models.domain.*
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.modules.network.UserService
@@ -15,10 +16,16 @@ abstract class AbstractUserRepository {
 
     abstract val changePasswordMapper: NetworkMapperInterface<ChangePasswordRequestParam>
 
+    abstract val pref: SharedPreferences
+
     abstract suspend fun login(
         username: String,
         password: String
     ): Flow<NetworkResult<LoginResponse>>
+
+    abstract fun isLoggedIn(): Boolean
+
+    abstract fun setLogin(accessToken: String)
 
     abstract suspend fun register(
         registerRequestParam: RegisterRequestParam
