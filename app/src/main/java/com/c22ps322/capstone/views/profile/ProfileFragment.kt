@@ -3,6 +3,7 @@ package com.c22ps322.capstone.views.profile
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.CameraSettingDialogBinding
 import com.c22ps322.capstone.databinding.FragmentProfileBinding
 import com.c22ps322.capstone.models.enums.CameraOption
+import com.c22ps322.capstone.viewmodels.ProfileViewModel
 import com.c22ps322.capstone.viewmodels.SettingViewModel
 import com.c22ps322.capstone.views.WelcomeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +35,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var dialog: Dialog
 
     private val settingViewModel by viewModels<SettingViewModel>()
+
+    private val profileViewModel by viewModels<ProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -114,6 +118,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
 
     private fun navigateToFirstScreen() {
+        profileViewModel.logout()
+
         val intent = Intent(requireContext(), WelcomeActivity::class.java)
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -101,6 +101,8 @@ class LoginActivity : AppCompatActivity() {
 
                             val mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(mainIntent)
+
+                            finish()
                         }
 
                         is NetworkResult.Error -> {

@@ -58,28 +58,6 @@
                 android:hint="@string/johny_depp" />
 
             <TextView
-                android:id="@+id/telp_label_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="@string/nomor_telepon"
-                android:textSize="14sp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/telp_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/background"
-                android:hint="@string/_6581111111111" />
-
-            <TextView
                 android:id="@+id/email_label_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +78,7 @@
                 android:paddingVertical="15dp"
                 android:background="@drawable/background"
                 android:inputType="textEmailAddress"
-                android:hint="@string/xxxxx123_email_com" />
+                android:hint="@string/example_email_com" />
 
             <TextView
                 android:id="@+id/password_label_tv"

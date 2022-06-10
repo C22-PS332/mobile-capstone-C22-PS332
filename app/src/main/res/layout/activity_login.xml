@@ -54,7 +54,7 @@
                 android:paddingVertical="15dp"
                 android:background="@drawable/background"
                 android:inputType="textEmailAddress"
-                android:hint="@string/xxxxx123_email_com" />
+                android:hint="@string/example_email_com" />
 
             <TextView
                 android:id="@+id/password_label_tv"

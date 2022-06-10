@@ -16,7 +16,7 @@ class RegisterMapper @Inject constructor() : NetworkMapperInterface<RegisterRequ
 
             put("password", target.password)
 
-            put("username", target.username)
+            put("name", target.name)
         }
 
         val jsonObjectString = jsonObject.toString()

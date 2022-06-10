@@ -14,6 +14,6 @@ class LoginViewModel @Inject constructor(
     suspend fun login(email: String, password: String) =
         userRepository.login(email, password)
 
-    suspend fun isLoggedIn() =
+    fun isLoggedIn(): Boolean =
         userRepository.isLoggedIn()
 }

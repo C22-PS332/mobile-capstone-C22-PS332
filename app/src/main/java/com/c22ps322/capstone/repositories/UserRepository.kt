@@ -65,9 +65,33 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override suspend fun register(registerRequestParam: RegisterRequestParam): Flow<NetworkResult<RegisterResponse>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun register(registerRequestParam: RegisterRequestParam):Flow<NetworkResult<RegisterResponse>> = flow {
+
+        emit(NetworkResult.Loading)
+
+        try {
+            val requestBody = registerMapper.toJson(registerRequestParam)
+
+            val response: Response<RegisterResponse> = userService.register(requestBody)
+
+            when (response.code()) {
+                200 -> {
+                    emit(NetworkResult.Success(response.body()!!))
+                }
+
+                else -> {
+                    val jsonObject =
+                        JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
+
+                    val message = jsonObject.getString("detail").orEmpty()
+
+                    emit(NetworkResult.Error(message))
+                }
+            }
+        } catch (e: Exception) {
+            emit(NetworkResult.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun changePassword(changePasswordRequestParam: ChangePasswordRequestParam): Flow<NetworkResult<ChangePasswordResponse>> =
         flow {
@@ -96,6 +120,10 @@ class UserRepository @Inject constructor(
                 emit(NetworkResult.Error(e.message.toString()))
             }
         }
+
+    override fun logout() {
+        pref.edit().clear().apply()
+    }
 
     companion object {
         const val USER_TOKEN_KEY = "user_token_key"

@@ -34,4 +34,6 @@ abstract class AbstractUserRepository {
     abstract suspend fun changePassword(
         changePasswordRequestParam: ChangePasswordRequestParam
     ): Flow<NetworkResult<ChangePasswordResponse>>
+
+    abstract fun logout()
 }
