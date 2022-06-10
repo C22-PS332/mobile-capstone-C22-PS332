@@ -3,12 +3,16 @@ package com.c22ps322.capstone.views.profile
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,15 +20,25 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.FragmentChangePasswordBinding
+import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.showErrorInput
+import com.c22ps322.capstone.viewmodels.ProfileViewModel
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 
-class ChangePasswordFragment : Fragment() {
+@AndroidEntryPoint
+class ChangePasswordFragment : Fragment(), View.OnClickListener {
 
-    private var _binding: FragmentChangePasswordBinding ?= null
+    private var _binding: FragmentChangePasswordBinding? = null
 
     private val binding get() = _binding
 
     private lateinit var navController: NavController
+
+    private val profileViewModel by viewModels<ProfileViewModel>()
+
+    private var changePasswordJob: Job = Job()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +59,8 @@ class ChangePasswordFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.profileFragment))
+        val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.homeFragment, R.id.profileFragment))
 
         navController = findNavController()
 
@@ -59,44 +74,55 @@ class ChangePasswordFragment : Fragment() {
     private fun setupInputValidation() {
 
         binding?.apply {
-            this.newPasswordEt.addTextChangedListener(object: TextWatcher {
+            this.newPasswordEt.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
 
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { validateNewPassword(s) }
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    validateNewPassword(s)
+                }
 
                 override fun afterTextChanged(s: Editable?) {}
             })
 
-            this.retypeNewPasswordEt.addTextChangedListener(object: TextWatcher {
+            this.retypeNewPasswordEt.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
 
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { validateRetypedPassword(s) }
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    validateRetypedPassword(s)
+                }
 
                 override fun afterTextChanged(s: Editable?) {}
             })
+
+            this.savePasswordBtn.setOnClickListener(this@ChangePasswordFragment)
         }
     }
 
     private fun validateRetypedPassword(password: CharSequence) {
         binding?.newPasswordEt?.text.let {
-            if (it.toString() != password.toString() && password.isNotEmpty()) binding?.retypeNewPasswordLabel?.showErrorInput(getString(R.string.error_new_password))
+            if (it.toString() != password.toString() && password.isNotEmpty()) binding?.retypeNewPasswordLabel?.showErrorInput(
+                getString(R.string.error_new_password)
+            )
             else binding?.retypeNewPasswordLabel?.error = null
         }
     }
 
     private fun validateNewPassword(password: CharSequence) {
-
-        if(password.length < 8 && password.isNotEmpty()) binding?.newPasswordLabel?.showErrorInput(getString(R.string.error_change_password))
+        if (password.length < 8 && password.isNotEmpty()) binding?.newPasswordLabel?.showErrorInput(
+            getString(R.string.error_change_password)
+        )
         else binding?.newPasswordLabel?.error = null
     }
 
@@ -116,5 +142,88 @@ class ChangePasswordFragment : Fragment() {
         _binding = null
 
         hideKeyBoard()
+    }
+
+    override fun onClick(v: View) {
+        val oldPassword = binding?.oldPasswordEt?.text?.toString().orEmpty()
+
+        if (TextUtils.isEmpty(oldPassword)) {
+            binding?.root?.let {
+                Snackbar.make(
+                    it,
+                    getString(R.string.error_old_password),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
+            return
+        }
+
+        val newPassword = binding?.newPasswordEt?.text?.toString().orEmpty()
+
+        if (newPassword.length < 8) {
+            binding?.root?.let {
+                Snackbar.make(
+                    it,
+                    getString(R.string.error_change_password),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
+            return
+        }
+
+        val confirmPassword = binding?.newPasswordEt?.text?.toString().orEmpty()
+
+        if (confirmPassword != newPassword) {
+            binding?.root?.let {
+                Snackbar.make(
+                    it,
+                    getString(R.string.error_new_password),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
+            return
+        }
+
+        if (changePasswordJob.isActive) changePasswordJob.cancel()
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val changePasswordFlow =
+                profileViewModel.changePassword("cursedbruh69", oldPassword, newPassword)
+
+            changePasswordFlow.collect { result ->
+                when (result) {
+                    is NetworkResult.Loading -> binding?.progressHorizontal?.isVisible = true
+
+                    is NetworkResult.Success -> {
+                        binding?.progressHorizontal?.hide()
+
+                        binding?.root?.let {
+                            Snackbar.make(
+                                it,
+                                result.data.message,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        navController.navigate(R.id.action_changePasswordFragment_to_profileFragment)
+                    }
+
+                    is NetworkResult.Error -> {
+                        binding?.progressHorizontal?.hide()
+
+                        binding?.root?.let {
+                            Snackbar.make(
+                                it,
+                                result.message,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 }

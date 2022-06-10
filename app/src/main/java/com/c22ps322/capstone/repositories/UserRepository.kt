@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -61,9 +62,33 @@ class UserRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun changePassword(changePasswordRequestParam: ChangePasswordRequestParam): Flow<NetworkResult<ChangePasswordResponse>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun changePassword(changePasswordRequestParam: ChangePasswordRequestParam): Flow<NetworkResult<ChangePasswordResponse>> =
+        flow {
+            emit(NetworkResult.Loading)
+
+            try {
+
+                val requestBody = changePasswordMapper.toJson(changePasswordRequestParam)
+
+                val response = userService.changePassword(requestBody)
+
+                when (response.code()) {
+                    200 -> emit(NetworkResult.Success(response.body()!!))
+
+                    else -> {
+                        val jsonObject =
+                            JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
+
+                        val message = jsonObject.getString("detail").orEmpty()
+
+                        emit(NetworkResult.Error(message))
+                    }
+                }
+
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
+            }
+        }
 
     companion object {
         const val USER_TOKEN_KEY = "user_token_key"

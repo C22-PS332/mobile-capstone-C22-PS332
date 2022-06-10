@@ -69,4 +69,6 @@
     <string name="ingredients">Bahan</string>
     <string name="open_camera">Buka Kamera</string>
     <string name="capture_successfull">Capture berhasil</string>
+    <string name="error_old_password">Password harus diisi!</string>
+    <string name="change_password_successfull">Password berhasil diubah</string>
 </resources>
