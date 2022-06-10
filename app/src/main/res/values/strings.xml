@@ -67,4 +67,6 @@
     <string name="amount">Jumlah</string>
     <string name="more_detail">Detail selengkapnya</string>
     <string name="ingredients">Bahan</string>
+    <string name="open_camera">Buka Kamera</string>
+    <string name="capture_successfull">Capture berhasil</string>
 </resources>
