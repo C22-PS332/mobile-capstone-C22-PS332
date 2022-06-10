@@ -17,7 +17,7 @@ interface UserService {
     ): Response<LoginResponse>
 
     @POST("user")
-    @Headers("Content-Type", "application/json")
+    @Headers("Content-Type: application/json")
     suspend fun register(
         // email
         // name
@@ -26,7 +26,7 @@ interface UserService {
     ): Response<RegisterResponse>
 
     @PUT("user/change-password")
-    @Headers("Content-Type", "application/json")
+    @Headers("Content-Type: application/json")
     suspend fun changePassword(
         // email
         // old password
