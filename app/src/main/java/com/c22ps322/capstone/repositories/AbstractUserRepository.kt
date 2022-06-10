@@ -25,7 +25,7 @@ abstract class AbstractUserRepository {
 
     abstract fun isLoggedIn(): Boolean
 
-    abstract fun setLogin(accessToken: String)
+    abstract fun setLogin(email: String, accessToken: String)
 
     abstract suspend fun register(
         registerRequestParam: RegisterRequestParam
