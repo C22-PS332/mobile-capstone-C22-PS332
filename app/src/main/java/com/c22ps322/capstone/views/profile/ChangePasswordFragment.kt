@@ -203,7 +203,7 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
                         binding?.root?.let {
                             Snackbar.make(
                                 it,
-                                getString(R.string.change_password_successfull),
+                                result.data.message,
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
