@@ -10,32 +10,32 @@ import kotlinx.parcelize.Parcelize
 data class SpoonacularResponse(
 
 	@Json(name="readyInMinutes")
-	val readyInMinutes: Int,
+	val readyInMinutes: Int?,
 
 	@Json(name="summary")
-	val summary: String,
+	val summary: String?,
 
 	@Json(name="image")
-	val image: String,
+	val image: String?,
 
 	@Json(name="servings")
-	val servings: Int,
+	val servings: Int?,
 
 	@Json(name="nutrition")
-	val nutrition: Nutrition,
+	val nutrition: Nutrition?,
 
 	@Json(name="id")
 	val id: Int,
 
 	@Json(name="title")
-	val title: String,
+	val title: String?,
 
 	@Json(name = "creditsText")
-	val creditsText: String,
+	val creditsText: String?,
 
 	@Json(name = "sourceUrl")
-	val sourceUrl: String,
+	val sourceUrl: String?,
 
 	@Json(name="extendedIngredients")
-	val extendedIngredients: List<ExtendedIngredientsItem>
+	val extendedIngredients: List<ExtendedIngredientsItem>?
 ): Parcelable

@@ -49,18 +49,18 @@ class DetailFoodActivity : AppCompatActivity() {
                 override fun onClick(item: ExtendedIngredientsItem) {
                     Toast.makeText(
                         this@DetailFoodActivity,
-                        item.name,
+                        item.name.orEmpty(),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
-        listIngredientAdapter.submitList(sponaacularRecipe.extendedIngredients)
+        listIngredientAdapter.submitList(sponaacularRecipe.extendedIngredients.orEmpty())
 
         binding.apply {
-            recipeTitleTv.text = sponaacularRecipe.title
+            recipeTitleTv.text = sponaacularRecipe.title.orEmpty()
 
-            recipeDescTv.text = sponaacularRecipe.creditsText
+            recipeDescTv.text = sponaacularRecipe.creditsText.orEmpty()
 
             timeTv.text = getString(
                 R.string.percentage_placeholder,
@@ -72,6 +72,8 @@ class DetailFoodActivity : AppCompatActivity() {
                 LinearLayoutManager(this@DetailFoodActivity, LinearLayoutManager.HORIZONTAL, false)
 
             ingredientList.adapter = listIngredientAdapter
+
+            servingsTv.text = getString(R.string.food_servings, sponaacularRecipe.servings.toString())
         }
 
         Glide.with(this)
@@ -103,8 +105,8 @@ class DetailFoodActivity : AppCompatActivity() {
 
         val recipeTabAdapter = RecipeTabAdapter(
             this,
-            sponaacularRecipe.summary,
-            sponaacularRecipe.sourceUrl,
+            sponaacularRecipe.summary.orEmpty(),
+            sponaacularRecipe.sourceUrl.orEmpty(),
             sponaacularRecipe.nutrition
         )
 

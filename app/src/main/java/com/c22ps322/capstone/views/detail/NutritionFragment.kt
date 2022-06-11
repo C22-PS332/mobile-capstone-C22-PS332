@@ -55,8 +55,8 @@ class NutritionFragment : Fragment() {
 
         binding?.totalWeightTv?.text = getString(
             R.string.percentage_placeholder,
-            nutrition.weightPerServing.amount.roundToInt().toString(),
-            nutrition.weightPerServing.unit
+            nutrition.weightPerServing?.amount?.roundToInt().toString(),
+            nutrition.weightPerServing?.unit.orEmpty()
         )
 
         val typeInterface = ResourcesCompat.getFont(requireContext(), R.font.poppins_medium)
@@ -67,7 +67,9 @@ class NutritionFragment : Fragment() {
 
         val blackTextColor = ResourcesCompat.getColor(resources, R.color.black, null)
 
-        if (nutrition.nutrients.isEmpty()) {
+        val nutrients = nutrition.nutrients.orEmpty()
+
+        if (nutrients.isEmpty()) {
             val tableRow = TableRow(requireContext())
 
             tableRow.gravity = Gravity.CENTER
@@ -129,7 +131,7 @@ class NutritionFragment : Fragment() {
 
         var count = 0
 
-        nutrition.nutrients.forEach { item ->
+        nutrients.forEach { item ->
             val tableRow = TableRow(requireContext())
 
             count++
@@ -176,17 +178,17 @@ class NutritionFragment : Fragment() {
                 setTextColor(blackTextColor)
             }
 
-            titleTextView.text = item.name
+            titleTextView.text = item.name.orEmpty()
 
             amountTextView.text = getString(
                 R.string.percentage_placeholder,
-                item.amount.roundToInt().toString(),
-                item.unit
+                item.amount?.roundToInt().toString(),
+                item.unit.orEmpty()
             )
 
             valueTextView.text = getString(
                 R.string.percentage_placeholder,
-                item.percentOfDailyNeeds.roundToInt().toString(),
+                item.percentOfDailyNeeds?.roundToInt().toString(),
                 '%'
             )
 
@@ -206,7 +208,7 @@ class NutritionFragment : Fragment() {
         private const val ARG_PARAM = "nutrition"
 
         @JvmStatic
-        fun newInstance(ingredients: Nutrition) =
+        fun newInstance(ingredients: Nutrition?) =
             NutritionFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(ARG_PARAM, ingredients)

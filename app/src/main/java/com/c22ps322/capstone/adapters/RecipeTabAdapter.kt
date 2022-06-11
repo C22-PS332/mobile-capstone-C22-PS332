@@ -11,7 +11,7 @@ class RecipeTabAdapter(
     fragment: FragmentActivity,
     private val summary: String,
     private val sourceUrl: String,
-    private val nutrition: Nutrition
+    private val nutrition: Nutrition?
 ) :
     FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2
