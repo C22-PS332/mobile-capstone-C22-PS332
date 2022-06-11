@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/CustomWhiteActionBar"
+        app:titleTextAppearance="@style/CustomAppBarTitleTextAppearance"
         app:title="@string/edit_profile">
 
         <LinearLayout
