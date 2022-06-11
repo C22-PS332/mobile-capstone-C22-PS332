@@ -119,7 +119,7 @@ class UserRepository @Inject constructor(
             } catch (e: Exception) {
                 emit(NetworkResult.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
 
     override fun logout() {
         pref.edit().clear().apply()
@@ -129,4 +129,5 @@ class UserRepository @Inject constructor(
         const val USER_TOKEN_KEY = "user_token_key"
         const val USER_EMAIL_KEY = "user_email_key"
     }
+
 }

@@ -71,4 +71,7 @@
     <string name="capture_successfull">Capture berhasil</string>
     <string name="error_old_password">Password harus diisi!</string>
     <string name="change_password_successfull">Password berhasil diubah</string>
+    <string name="retake_picture">Ambil ulang</string>
+    <string name="uploading">Sedang upload…</string>
+    <string name="preview">Preview</string>
 </resources>

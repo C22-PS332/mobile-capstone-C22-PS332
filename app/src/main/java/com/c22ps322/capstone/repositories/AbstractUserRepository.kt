@@ -5,7 +5,6 @@ import com.c22ps322.capstone.models.domain.*
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.modules.network.UserService
 import com.c22ps322.capstone.utils.NetworkMapperInterface
-import com.c22ps322.capstone.utils.RegisterMapper
 import kotlinx.coroutines.flow.Flow
 
 abstract class AbstractUserRepository {

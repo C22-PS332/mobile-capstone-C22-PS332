@@ -83,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setRegisterButtonEnable() {
-        binding.registerBtn.isEnabled = binding.nameEt.text.isNotEmpty() && binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
+        binding.registerBtn.isEnabled = binding.nameEt.text!!.isNotEmpty() && binding.emailEt.text!!.isNotEmpty() && binding.passwordEt.text!!.isNotEmpty()
     }
 
     private fun showLoading(isLoading: Boolean) {

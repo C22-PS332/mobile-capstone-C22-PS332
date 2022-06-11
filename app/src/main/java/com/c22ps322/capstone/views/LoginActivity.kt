@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setLoginButtonEnable() {
-        binding.logInBtn.isEnabled = binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
+        binding.logInBtn.isEnabled = binding.emailEt.text!!.isNotEmpty() && binding.passwordEt.text!!.isNotEmpty()
     }
 
     private fun showLoading(isLoading: Boolean) {

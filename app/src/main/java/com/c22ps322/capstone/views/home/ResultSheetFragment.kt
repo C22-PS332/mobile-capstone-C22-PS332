@@ -7,20 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.c22ps322.capstone.R
 import com.c22ps322.capstone.adapters.ListRecipeAdapter
 import com.c22ps322.capstone.databinding.FragmentResultSheetBinding
-import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
 import com.c22ps322.capstone.viewmodels.RecipeInformationViewModel
 import com.c22ps322.capstone.views.DetailFoodActivity
-import com.c22ps322.capstone.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -32,7 +32,7 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
     private val binding get() = _binding
 
-    private var listRecipe: ArrayList<DummyRecipe>? = arrayListOf()
+    private var listRecipe: ArrayList<Recipe>? = arrayListOf()
 
     private val recipeInformationViewModel by viewModels<RecipeInformationViewModel>()
 
@@ -76,8 +76,8 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
         val listRecipeAdapter = ListRecipeAdapter()
 
-        listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<DummyRecipe> {
-            override fun onClick(item: DummyRecipe) {
+        listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<Recipe> {
+            override fun onClick(item: Recipe) {
 
                 if (detailJob.isActive) detailJob.cancel()
 
@@ -115,13 +115,11 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
                                     binding?.progressHorizontal?.hide()
 
-                                    binding?.root?.let {
-                                        Snackbar.make(
-                                            it,
-                                            result.message,
-                                            Snackbar.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                    Toast.makeText(
+                                        requireContext(),
+                                        result.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         }
@@ -165,7 +163,7 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
         private const val ARG_PARAM = "list-recipe"
 
         @JvmStatic
-        fun newInstance(listRecipe: ArrayList<DummyRecipe>) =
+        fun newInstance(listRecipe: ArrayList<Recipe>) =
             ResultSheetFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ARG_PARAM, listRecipe)

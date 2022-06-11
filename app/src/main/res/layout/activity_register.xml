@@ -45,17 +45,26 @@
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/name_et"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/background"
-                android:hint="@string/johny_depp" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="false" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:background="@drawable/background"
+                    android:hint="@string/johny_depp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/email_label_tv"
@@ -66,19 +75,26 @@
                 android:text="@string/email"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/email_et"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/background"
-                android:inputType="textEmailAddress"
-                android:hint="@string/example_email_com" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="false" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:background="@drawable/background"
+                    android:hint="@string/example_email_com"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/password_label_tv"
@@ -90,18 +106,28 @@
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/password_et"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/background"
-                android:inputType="textPassword"
-                android:hint="@string/password_hint" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="false"
+                app:endIconMode="password_toggle" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:background="@drawable/background"
+                    android:inputType="textPassword"
+                    android:hint="@string/password_hint"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/register_btn"

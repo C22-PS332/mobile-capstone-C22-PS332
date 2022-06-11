@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,7 +24,6 @@ import com.c22ps322.capstone.databinding.FragmentChangePasswordBinding
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.showErrorInput
 import com.c22ps322.capstone.viewmodels.ProfileViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 
@@ -148,13 +148,12 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
         val oldPassword = binding?.oldPasswordEt?.text?.toString().orEmpty()
 
         if (TextUtils.isEmpty(oldPassword)) {
-            binding?.root?.let {
-                Snackbar.make(
-                    it,
-                    getString(R.string.error_old_password),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
+
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.error_old_password),
+                Toast.LENGTH_SHORT
+            ).show()
 
             return
         }
@@ -162,13 +161,12 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
         val newPassword = binding?.newPasswordEt?.text?.toString().orEmpty()
 
         if (newPassword.length < 8) {
-            binding?.root?.let {
-                Snackbar.make(
-                    it,
-                    getString(R.string.error_change_password),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
+
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.error_change_password),
+                Toast.LENGTH_SHORT
+            ).show()
 
             return
         }
@@ -176,13 +174,12 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
         val confirmPassword = binding?.newPasswordEt?.text?.toString().orEmpty()
 
         if (confirmPassword != newPassword) {
-            binding?.root?.let {
-                Snackbar.make(
-                    it,
-                    getString(R.string.error_new_password),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
+
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.error_new_password),
+                Toast.LENGTH_SHORT
+            ).show()
 
             return
         }
@@ -200,13 +197,11 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
                     is NetworkResult.Success -> {
                         binding?.progressHorizontal?.hide()
 
-                        binding?.root?.let {
-                            Snackbar.make(
-                                it,
-                                result.data.message,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
+                        Toast.makeText(
+                            requireContext(),
+                            result.data.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                         navController.navigate(R.id.action_changePasswordFragment_to_profileFragment)
                     }
@@ -214,13 +209,11 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
                     is NetworkResult.Error -> {
                         binding?.progressHorizontal?.hide()
 
-                        binding?.root?.let {
-                            Snackbar.make(
-                                it,
-                                result.message,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
+                        Toast.makeText(
+                            requireContext(),
+                            result.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

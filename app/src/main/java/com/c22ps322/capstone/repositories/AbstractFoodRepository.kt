@@ -1,6 +1,6 @@
 package com.c22ps322.capstone.repositories
 
-import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.models.spoonacular.SpoonacularResponse
 import com.c22ps322.capstone.modules.network.DomainFoodService
@@ -14,9 +14,9 @@ abstract class AbstractFoodRepository {
 
     abstract val spoonacularFoodService: SpoonacularFoodService
 
-    abstract suspend fun uploadIngredients(apiKey: String, file: File): Flow<NetworkResult<ArrayList<DummyRecipe>>>
+    abstract suspend fun uploadIngredients(apiKey: String, file: File): Flow<NetworkResult<ArrayList<Recipe>>>
 
     abstract suspend fun getRecipeInformation(id: Int): Flow<NetworkResult<SpoonacularResponse>>
 
-    abstract fun getErrorMessageFromApi(response: Response<*>): String
+    abstract fun getErrorMessageFromApi(response: Response<*>, targetString: String): String
 }
