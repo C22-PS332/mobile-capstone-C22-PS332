@@ -4,8 +4,10 @@ import com.c22ps322.capstone.models.domain.*
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.modules.network.UserService
 import com.c22ps322.capstone.utils.NetworkMapperInterface
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -51,5 +53,5 @@ class UserRepository @Inject constructor(
             } catch (e: Exception) {
                 emit(NetworkResult.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
 }
