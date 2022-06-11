@@ -24,8 +24,6 @@ abstract class AbstractUserRepository {
 
     abstract fun isLoggedIn(): Boolean
 
-    abstract fun setLogin(email: String, accessToken: String)
-
     abstract suspend fun register(
         registerRequestParam: RegisterRequestParam
     ): Flow<NetworkResult<RegisterResponse>>
@@ -39,6 +37,4 @@ abstract class AbstractUserRepository {
     abstract fun getEmail(): String?
 
     abstract fun getToken(): String?
-
-    abstract fun getBearer(): String
 }
