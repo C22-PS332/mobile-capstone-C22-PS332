@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import com.c22ps322.capstone.R
+import org.json.JSONObject
+import retrofit2.Response
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -80,4 +82,10 @@ fun reduceFileSize(file: File): File {
     }
 
     return file
+}
+
+fun getErrorMessageFromApi(response: Response<*>, targetString: String) : String{
+    val jsonObject = JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
+
+    return jsonObject.getString(targetString).orEmpty()
 }
