@@ -18,5 +18,5 @@ abstract class AbstractFoodRepository {
 
     abstract suspend fun getRecipeInformation(id: Int): Flow<NetworkResult<SpoonacularResponse>>
 
-    abstract fun getErrorMessageFromApi(response: Response<*>): String
+    abstract fun getErrorMessageFromApi(response: Response<*>, targetString: String): String
 }

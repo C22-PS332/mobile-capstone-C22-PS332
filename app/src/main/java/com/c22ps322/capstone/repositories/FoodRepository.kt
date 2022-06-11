@@ -40,7 +40,7 @@ class FoodRepository @Inject constructor(
         )
 
         try {
-            val response = foodService.uploadImage(multiPart)
+            val response = foodService.uploadImage("Bearer $apiKey",multiPart)
 
             when(response.code()) {
                 200 -> {
@@ -51,10 +51,7 @@ class FoodRepository @Inject constructor(
                     emit(NetworkResult.Success(result))
                 }
 
-                else -> {
-
-                    emit(NetworkResult.Error(response.errorBody().toString()))
-                }
+                else -> emit(NetworkResult.Error(getErrorMessageFromApi(response, "detail")))
             }
         } catch (e: Exception) {
             emit(NetworkResult.Error(e.message.toString()))
@@ -71,7 +68,7 @@ class FoodRepository @Inject constructor(
             when(response.code()){
                 200 -> emit(NetworkResult.Success(response.body()!!))
 
-                else -> emit(NetworkResult.Error(getErrorMessageFromApi(response)))
+                else -> emit(NetworkResult.Error(getErrorMessageFromApi(response, "message")))
             }
 
         } catch (e: Exception) {
@@ -80,9 +77,9 @@ class FoodRepository @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun getErrorMessageFromApi(response: Response<*>) : String{
+    override fun getErrorMessageFromApi(response: Response<*>, targetString: String) : String{
         val jsonObject = JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
 
-        return jsonObject.getString("message").orEmpty()
+        return jsonObject.getString(targetString).orEmpty()
     }
 }
