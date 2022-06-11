@@ -8,10 +8,25 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.c22ps322.capstone.R
+import com.c22ps322.capstone.databinding.ActivityLoginBinding
+import com.c22ps322.capstone.databinding.ActivityWelcomeBinding
+import com.c22ps322.capstone.models.enums.NetworkResult
+import com.c22ps322.capstone.viewmodels.LoginViewModel
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WelcomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityWelcomeBinding
+    private val loginViewModel by viewModels<LoginViewModel>()
+    private var welcomeJob: Job = Job()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
@@ -20,6 +35,21 @@ class WelcomeActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             requestCameraPermission()
+        }
+
+        // checking session
+        lifecycleScope.launchWhenCreated {
+            if (welcomeJob.isActive) welcomeJob.cancel()
+
+            welcomeJob = launch {
+
+                if (loginViewModel.isLoggedIn()) {
+                    val mainIntent = Intent(this@WelcomeActivity, MainActivity::class.java)
+                    startActivity(mainIntent)
+
+                    finish()
+                }
+            }
         }
     }
 

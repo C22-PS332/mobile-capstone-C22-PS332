@@ -1,6 +1,7 @@
 package com.c22ps322.capstone.modules
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -25,4 +26,12 @@ object PreferenceModule {
             produceFile = { context.preferencesDataStoreFile(APP_PREFERENCES) }
         )
     }
+
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE)
+    }
+
+    private const val USER_PREFERENCES = "user_preferences"
 }

@@ -43,18 +43,28 @@
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/email_et"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/background"
-                android:inputType="textEmailAddress"
-                android:hint="@string/xxxxx123_email_com" />
+                app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:background="@drawable/background"
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/example_email_com" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/password_label_tv"
@@ -66,18 +76,30 @@
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/password_et"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="15dp"
-                android:background="@drawable/background"
-                android:inputType="textPassword"
-                android:hint="@string/password_hint" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
+                app:endIconMode="password_toggle" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="15dp"
+                    android:background="@drawable/background"
+                    android:inputType="textPassword"
+                    android:hint="@string/password_hint"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/log_in_btn"
@@ -89,30 +111,8 @@
                 android:text="@string/masuk"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="8dp"
-                android:background="@drawable/background" />
-
-            <TextView
-                android:id="@+id/log_option_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/atau_masuk_dengan_google"
-                android:textSize="14sp"
-                android:layout_gravity="center"/>
-
-            <Button
-                android:id="@+id/log_in_google_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:text="@string/google"
-                android:textColor="#A3A2A1"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="8dp"
-                android:backgroundTint="#F8F7FA" />
+                android:background="@drawable/background"
+                android:enabled="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

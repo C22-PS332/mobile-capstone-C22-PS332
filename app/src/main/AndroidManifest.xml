@@ -50,6 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".views.MainActivity"
+            android:launchMode="singleTop"
             android:exported="false" />
 
         <provider

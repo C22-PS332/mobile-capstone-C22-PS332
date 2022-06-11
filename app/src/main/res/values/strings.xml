@@ -30,7 +30,7 @@
     <string name="search_result">Hasil Pencarian</string>
     <string name="masuk">Masuk</string>
     <string name="nikmati_fitur_lengkap_dengan_masuk">Nikmati fitur lengkap dengan masuk!</string>
-    <string name="xxxxx123_email_com">xxxxx123@email.com</string>
+    <string name="example_email_com">example@email.com</string>
     <string name="password">Password</string>
     <string name="password_hint">********</string>
     <string name="atau_masuk_dengan_google">atau Masuk dengan Google</string>

@@ -19,8 +19,8 @@ interface UserService {
     @POST("user")
     @Headers("Content-Type: application/json")
     suspend fun register(
-        // email
         // name
+        // email
         // password
         @Body param: RequestBody
     ): Response<RegisterResponse>
