@@ -38,7 +38,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         // checking session
-        lifecycleScope.launchWhenResumed {
+        lifecycleScope.launchWhenCreated {
             if (welcomeJob.isActive) welcomeJob.cancel()
 
             welcomeJob = launch {
@@ -46,6 +46,8 @@ class WelcomeActivity : AppCompatActivity() {
                 if (loginViewModel.isLoggedIn()) {
                     val mainIntent = Intent(this@WelcomeActivity, MainActivity::class.java)
                     startActivity(mainIntent)
+
+                    finish()
                 }
             }
         }

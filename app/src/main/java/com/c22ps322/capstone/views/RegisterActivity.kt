@@ -32,14 +32,17 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // set button enable
-        setRegisterButtonEnable()
-
-        // text change listener
+        // add listener to name edittext
         binding.nameEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!isNameValid(binding.nameEt.text!!.toString())) {
+                    binding.nameTil.helperText = "Name cannot be empty"
+                } else {
+                    binding.nameTil.helperText = null
+                }
+
                 setRegisterButtonEnable()
             }
             override fun afterTextChanged(p0: Editable?) {
@@ -47,10 +50,17 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        // add listener to email edittext
         binding.emailEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!isEmailValid(binding.emailEt.text!!.toString())) {
+                    binding.emailTil.helperText = "Email is not valid"
+                } else {
+                    binding.emailTil.helperText = null
+                }
+
                 setRegisterButtonEnable()
             }
             override fun afterTextChanged(p0: Editable?) {
@@ -58,10 +68,17 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        // add listener to password edittext
         binding.passwordEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!isPasswordValid(binding.passwordEt.text!!.toString())) {
+                    binding.passwordTil.helperText = "Minimum 8 characters"
+                } else {
+                    binding.passwordTil.helperText = null
+                }
+
                 setRegisterButtonEnable()
             }
             override fun afterTextChanged(p0: Editable?) {
@@ -83,11 +100,23 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setRegisterButtonEnable() {
-        binding.registerBtn.isEnabled = binding.nameEt.text!!.isNotEmpty() && binding.emailEt.text!!.isNotEmpty() && binding.passwordEt.text!!.isNotEmpty()
+        binding.registerBtn.isEnabled = isNameValid(binding.nameEt.text!!.toString()) && isEmailValid(binding.emailEt.text!!.toString()) && isPasswordValid(binding.passwordEt.text!!.toString())
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.registerPg.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length >= 8
+    }
+
+    private fun isNameValid(name: String): Boolean {
+        return name.isNotEmpty()
     }
 
     private fun register(name: String, email: String, password: String) {

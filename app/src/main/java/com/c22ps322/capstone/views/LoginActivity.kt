@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -30,14 +29,17 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // set button enable
-        setLoginButtonEnable()
-
         // add listener to email edittext
         binding.emailEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!isEmailValid(binding.emailEt.text!!.toString())) {
+                    binding.emailTil.helperText = "Email is not valid"
+                } else {
+                    binding.emailTil.helperText = null
+                }
+
                 setLoginButtonEnable()
             }
             override fun afterTextChanged(p0: Editable?) {
@@ -50,6 +52,12 @@ class LoginActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!isPasswordValid(binding.passwordEt.text!!.toString())) {
+                    binding.passwordTil.helperText = "Minimum 8 characters"
+                } else {
+                    binding.passwordTil.helperText = null
+                }
+
                 setLoginButtonEnable()
             }
             override fun afterTextChanged(p0: Editable?) {
@@ -71,7 +79,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setLoginButtonEnable() {
-        binding.logInBtn.isEnabled = binding.emailEt.text!!.isNotEmpty() && binding.passwordEt.text!!.isNotEmpty()
+        binding.logInBtn.isEnabled = isEmailValid(binding.emailEt.text!!.toString()) && isPasswordValid(binding.passwordEt.text!!.toString())
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length >= 8
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -100,8 +116,8 @@ class LoginActivity : AppCompatActivity() {
                             }
 
                             val mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(mainIntent)
-
                             finish()
                         }
 

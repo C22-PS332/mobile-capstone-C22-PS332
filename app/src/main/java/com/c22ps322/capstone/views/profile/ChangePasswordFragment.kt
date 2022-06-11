@@ -1,6 +1,7 @@
 package com.c22ps322.capstone.views.profile
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -187,8 +188,10 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
         if (changePasswordJob.isActive) changePasswordJob.cancel()
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val email = profileViewModel.getEmail()
+
             val changePasswordFlow =
-                profileViewModel.changePassword("cursedbruh69", oldPassword, newPassword)
+                profileViewModel.changePassword(email!!, oldPassword, newPassword)
 
             changePasswordFlow.collect { result ->
                 when (result) {

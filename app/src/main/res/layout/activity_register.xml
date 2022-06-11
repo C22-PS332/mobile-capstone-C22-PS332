@@ -46,10 +46,12 @@
                 android:textColor="@color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:hintEnabled="false" >
+                app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name_et"
@@ -61,8 +63,8 @@
                     android:paddingHorizontal="15dp"
                     android:paddingVertical="15dp"
                     android:background="@drawable/background"
-                    android:hint="@string/johny_depp"
-                    />
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/johny_depp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,11 +77,14 @@
                 android:text="@string/email"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:hintEnabled="false" >
+                app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_et"
@@ -91,8 +96,8 @@
                     android:paddingHorizontal="15dp"
                     android:paddingVertical="15dp"
                     android:background="@drawable/background"
-                    android:hint="@string/example_email_com"
-                    />
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/example_email_com" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,10 +112,12 @@
                 android:textColor="@color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
                 app:endIconMode="password_toggle" >
 
                 <com.google.android.material.textfield.TextInputEditText

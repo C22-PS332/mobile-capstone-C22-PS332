@@ -16,4 +16,8 @@ class ProfileViewModel @Inject constructor(
         userRepository.changePassword(ChangePasswordRequestParam(email, password, newPassword))
 
     fun logout() = userRepository.logout()
+
+    fun getEmail() = userRepository.getEmail()
+
+    fun getBearer() = userRepository.getBearer()
 }

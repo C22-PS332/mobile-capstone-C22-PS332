@@ -35,4 +35,10 @@ abstract class AbstractUserRepository {
     ): Flow<NetworkResult<ChangePasswordResponse>>
 
     abstract fun logout()
+
+    abstract fun getEmail(): String?
+
+    abstract fun getToken(): String?
+
+    abstract fun getBearer(): String
 }

@@ -52,8 +52,9 @@ class UserRepository @Inject constructor(
 
     override fun isLoggedIn(): Boolean {
         val token = pref.getString(USER_TOKEN_KEY, null)
+        val email = pref.getString(USER_EMAIL_KEY, null)
 
-        return !token.isNullOrBlank()
+        return !token.isNullOrBlank() && !email.isNullOrBlank()
     }
 
     override fun setLogin(email: String, accessToken: String) {
@@ -125,9 +126,20 @@ class UserRepository @Inject constructor(
         pref.edit().clear().apply()
     }
 
+    override fun getEmail(): String? {
+        return pref.getString(USER_EMAIL_KEY, null)
+    }
+
+    override fun getToken(): String? {
+        return pref.getString(USER_TOKEN_KEY, null)
+    }
+
+    override fun getBearer(): String {
+        return "Bearer ${getToken()}"
+    }
+
     companion object {
         const val USER_TOKEN_KEY = "user_token_key"
         const val USER_EMAIL_KEY = "user_email_key"
     }
-
 }

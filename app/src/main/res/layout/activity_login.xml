@@ -44,9 +44,11 @@
                 android:textColor="@color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -75,10 +77,12 @@
                 android:textColor="@color/black" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_til"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:hintEnabled="false"
+                app:helperTextTextColor="@color/dark_orange"
                 app:endIconMode="password_toggle" >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +111,8 @@
                 android:text="@string/masuk"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="8dp"
-                android:background="@drawable/background" />
+                android:background="@drawable/background"
+                android:enabled="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
