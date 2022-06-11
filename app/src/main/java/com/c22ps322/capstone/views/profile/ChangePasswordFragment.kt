@@ -1,7 +1,6 @@
 package com.c22ps322.capstone.views.profile
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -128,12 +127,12 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
     }
 
     private fun hideKeyBoard() {
-        requireActivity().currentFocus ?: return
+        val currentFocus = requireActivity().currentFocus ?: return
 
         val inputMethodManager =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
 
 
@@ -178,20 +177,21 @@ class ChangePasswordFragment : Fragment(), View.OnClickListener {
 
             Toast.makeText(
                 requireContext(),
-                getString(R.string.error_new_password),
+                getString(R.string.error_retyped_password),
                 Toast.LENGTH_SHORT
             ).show()
 
             return
         }
 
+        val email = profileViewModel.getEmail() ?: return
+
         if (changePasswordJob.isActive) changePasswordJob.cancel()
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            val email = profileViewModel.getEmail()
 
             val changePasswordFlow =
-                profileViewModel.changePassword(email!!, oldPassword, newPassword)
+                profileViewModel.changePassword(email, oldPassword, newPassword)
 
             changePasswordFlow.collect { result ->
                 when (result) {
