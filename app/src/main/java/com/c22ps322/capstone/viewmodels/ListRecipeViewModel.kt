@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.repositories.AbstractFoodRepository
+import com.c22ps322.capstone.repositories.AbstractUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
@@ -17,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListRecipeViewModel @Inject constructor(
-    private val foodRepository: AbstractFoodRepository
+    private val foodRepository: AbstractFoodRepository,
+
+    private val userRepository: AbstractUserRepository
 ): ViewModel() {
 
     var uploadFlow: Flow<NetworkResult<ArrayList<Recipe>>> = flowOf()
@@ -26,12 +29,12 @@ class ListRecipeViewModel @Inject constructor(
 
     val startCollectFlow: LiveData<Boolean> = _startCollectFlow
 
-    suspend fun uploadImage(file: File) {
+    suspend fun uploadImage(token: String,file: File) {
 
         _startCollectFlow.value = true
 
         uploadFlow = flow {
-            val source = foodRepository.uploadIngredients("api", file)
+            val source = foodRepository.uploadIngredients(token, file)
 
             emitAll(source)
         }
@@ -40,4 +43,6 @@ class ListRecipeViewModel @Inject constructor(
     fun doneCollectFlow(){
         _startCollectFlow.value = false
     }
+
+    fun getToken() = userRepository.getToken()
 }
