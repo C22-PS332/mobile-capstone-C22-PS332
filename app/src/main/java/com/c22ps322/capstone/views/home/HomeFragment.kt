@@ -223,12 +223,24 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
     private fun uploadImage(file: File) {
 
+        val token = listRecipeViewModel.getToken()
+
+        if (token.isNullOrBlank()) {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.please_relogin),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPreview(file))
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             if (uploadJob.isActive) uploadJob.cancel()
 
-            uploadJob = launch { listRecipeViewModel.uploadImage(file) }
+            uploadJob = launch { listRecipeViewModel.uploadImage(token, file) }
         }
     }
 

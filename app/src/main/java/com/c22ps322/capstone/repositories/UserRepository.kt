@@ -1,16 +1,15 @@
 package com.c22ps322.capstone.repositories
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.c22ps322.capstone.models.domain.*
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.modules.network.UserService
 import com.c22ps322.capstone.utils.NetworkMapperInterface
+import com.c22ps322.capstone.utils.getErrorMessageFromApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -32,18 +31,14 @@ class UserRepository @Inject constructor(
 
             when (response.code()) {
                 200 -> {
+
                     emit(NetworkResult.Success(response.body()!!))
+
                     setLogin(username, response.body()!!.token)
                 }
 
-                else -> {
-                    val jsonObject =
-                        JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
+                else -> emit(NetworkResult.Error(getErrorMessageFromApi(response, "detail")))
 
-                    val message = jsonObject.getString("detail").orEmpty()
-
-                    emit(NetworkResult.Error(message))
-                }
             }
         } catch (e: Exception) {
             emit(NetworkResult.Error(e.message.toString()))
@@ -57,7 +52,7 @@ class UserRepository @Inject constructor(
         return !token.isNullOrBlank() && !email.isNullOrBlank()
     }
 
-    override fun setLogin(email: String, accessToken: String) {
+    private fun setLogin(email: String, accessToken: String) {
         pref.edit().apply {
             putString(USER_TOKEN_KEY, accessToken)
             putString(USER_EMAIL_KEY, email)
@@ -66,33 +61,27 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override suspend fun register(registerRequestParam: RegisterRequestParam):Flow<NetworkResult<RegisterResponse>> = flow {
+    override suspend fun register(registerRequestParam: RegisterRequestParam): Flow<NetworkResult<RegisterResponse>> =
+        flow {
 
-        emit(NetworkResult.Loading)
+            emit(NetworkResult.Loading)
 
-        try {
-            val requestBody = registerMapper.toJson(registerRequestParam)
+            try {
+                val requestBody = registerMapper.toJson(registerRequestParam)
 
-            val response: Response<RegisterResponse> = userService.register(requestBody)
+                val response: Response<RegisterResponse> = userService.register(requestBody)
 
-            when (response.code()) {
-                200 -> {
-                    emit(NetworkResult.Success(response.body()!!))
+                when (response.code()) {
+                    200 -> {
+                        emit(NetworkResult.Success(response.body()!!))
+                    }
+
+                    else -> emit(NetworkResult.Error(getErrorMessageFromApi(response, "detail")))
                 }
-
-                else -> {
-                    val jsonObject =
-                        JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
-
-                    val message = jsonObject.getString("detail").orEmpty()
-
-                    emit(NetworkResult.Error(message))
-                }
+            } catch (e: Exception) {
+                emit(NetworkResult.Error(e.message.toString()))
             }
-        } catch (e: Exception) {
-            emit(NetworkResult.Error(e.message.toString()))
-        }
-    }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun changePassword(changePasswordRequestParam: ChangePasswordRequestParam): Flow<NetworkResult<ChangePasswordResponse>> =
         flow {
@@ -107,14 +96,7 @@ class UserRepository @Inject constructor(
                 when (response.code()) {
                     200 -> emit(NetworkResult.Success(response.body()!!))
 
-                    else -> {
-                        val jsonObject =
-                            JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
-
-                        val message = jsonObject.getString("detail").orEmpty()
-
-                        emit(NetworkResult.Error(message))
-                    }
+                    else -> emit(NetworkResult.Error(getErrorMessageFromApi(response, "detail")))
                 }
 
             } catch (e: Exception) {
@@ -132,10 +114,6 @@ class UserRepository @Inject constructor(
 
     override fun getToken(): String? {
         return pref.getString(USER_TOKEN_KEY, null)
-    }
-
-    override fun getBearer(): String {
-        return "Bearer ${getToken()}"
     }
 
     companion object {

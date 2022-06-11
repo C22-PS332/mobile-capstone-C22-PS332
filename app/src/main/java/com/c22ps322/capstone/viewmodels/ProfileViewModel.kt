@@ -18,6 +18,4 @@ class ProfileViewModel @Inject constructor(
     fun logout() = userRepository.logout()
 
     fun getEmail() = userRepository.getEmail()
-
-    fun getBearer() = userRepository.getBearer()
 }

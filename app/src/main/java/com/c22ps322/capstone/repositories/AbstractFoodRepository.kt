@@ -6,7 +6,6 @@ import com.c22ps322.capstone.models.spoonacular.SpoonacularResponse
 import com.c22ps322.capstone.modules.network.DomainFoodService
 import com.c22ps322.capstone.modules.network.SpoonacularFoodService
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 import java.io.File
 
 abstract class AbstractFoodRepository {
@@ -17,6 +16,4 @@ abstract class AbstractFoodRepository {
     abstract suspend fun uploadIngredients(apiKey: String, file: File): Flow<NetworkResult<ArrayList<Recipe>>>
 
     abstract suspend fun getRecipeInformation(id: Int): Flow<NetworkResult<SpoonacularResponse>>
-
-    abstract fun getErrorMessageFromApi(response: Response<*>, targetString: String): String
 }

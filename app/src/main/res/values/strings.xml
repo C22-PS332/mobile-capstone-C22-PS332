@@ -7,7 +7,7 @@
     <string name="change_camera">Ubah Kamera</string>
     <string name="change_password">Ubah Password</string>
     <string name="error_change_password">Password minimal 8 karakter</string>
-    <string name="error_new_password">Password tidak sesuai dengan password baru</string>
+    <string name="error_retyped_password">Password tidak sesuai dengan password baru</string>
     <string name="old_password">Password Lama</string>
     <string name="new_password">Password Baru</string>
     <string name="full_name">Nama Lengkap</string>
@@ -69,9 +69,14 @@
     <string name="open_camera">Buka Kamera</string>
     <string name="capture_successfull">Capture berhasil</string>
     <string name="error_old_password">Password harus diisi!</string>
+    <string name="error_new_password">Password minimal 8 karakter</string>
     <string name="change_password_successfull">Password berhasil diubah</string>
     <string name="retake_picture">Ambil ulang</string>
     <string name="uploading">Sedang upload…</string>
     <string name="preview">Preview</string>
     <string name="food_servings">Jumlah porsi : %1$s</string>
+    <string name="please_relogin">Harap login ulang</string>
+    <string name="email_is_required">Email harus diisi</string>
+    <string name="login_successfull">Login berhasil</string>
+    <string name="permission_denied">Permission tidak diberikan</string>
 </resources>

@@ -6,6 +6,7 @@ import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.models.spoonacular.SpoonacularResponse
 import com.c22ps322.capstone.modules.network.DomainFoodService
 import com.c22ps322.capstone.modules.network.SpoonacularFoodService
+import com.c22ps322.capstone.utils.getErrorMessageFromApi
 import com.c22ps322.capstone.utils.reduceFileSize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONObject
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
@@ -77,9 +77,4 @@ class FoodRepository @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun getErrorMessageFromApi(response: Response<*>, targetString: String) : String{
-        val jsonObject = JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())
-
-        return jsonObject.getString(targetString).orEmpty()
-    }
 }

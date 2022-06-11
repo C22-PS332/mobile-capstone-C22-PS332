@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.c22ps322.capstone.modules
 
 import com.c22ps322.capstone.models.domain.ChangePasswordRequestParam

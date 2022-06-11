@@ -122,11 +122,11 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun hideKeyBoard() {
-        requireActivity().currentFocus ?: return
+        val currentFocus = requireActivity().currentFocus ?: return
 
         val inputMethodManager =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
 }
