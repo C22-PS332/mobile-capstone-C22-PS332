@@ -1,17 +1,22 @@
 package com.c22ps322.capstone.repositories
 
 import com.c22ps322.capstone.BuildConfig
-import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.models.spoonacular.SpoonacularResponse
 import com.c22ps322.capstone.modules.network.DomainFoodService
 import com.c22ps322.capstone.modules.network.SpoonacularFoodService
+import com.c22ps322.capstone.utils.reduceFileSize
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
 import retrofit2.Response
 import java.io.File
-import java.lang.Exception
 import javax.inject.Inject
 
 class FoodRepository @Inject constructor(
@@ -21,25 +26,40 @@ class FoodRepository @Inject constructor(
     override suspend fun uploadIngredients(
         apiKey: String,
         file: File
-    ): Flow<NetworkResult<ArrayList<DummyRecipe>>> = flow {
+    ): Flow<NetworkResult<ArrayList<Recipe>>> = flow {
         emit(NetworkResult.Loading)
 
-        val dummyRecipeList = arrayListOf<DummyRecipe>()
+        val reducedFile = reduceFileSize(file)
 
-        for (i in 0..3) {
-            dummyRecipeList.add(
-                DummyRecipe(
-                    716429,
-                    "Soto",
-                    "Ini adalah soto",
-                    "https://awsimages.detik.net.id/community/media/visual/2021/12/14/resep-soto-ayam-jawa_43.jpeg?w=700&q=90",
-                    arrayListOf("1 cup rice", "10 oz chickpeas")
-                )
-            )
+        val img = reducedFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+
+        val multiPart = MultipartBody.Part.createFormData(
+            "file",
+            file.name,
+            img
+        )
+
+        try {
+            val response = foodService.uploadImage(multiPart)
+
+            when(response.code()) {
+                200 -> {
+                    val result = arrayListOf<Recipe>()
+
+                    response.body().orEmpty().forEach { result.add(it) }
+
+                    emit(NetworkResult.Success(result))
+                }
+
+                else -> {
+
+                    emit(NetworkResult.Error(response.errorBody().toString()))
+                }
+            }
+        } catch (e: Exception) {
+            emit(NetworkResult.Error(e.message.toString()))
         }
-
-        emit(NetworkResult.Success(dummyRecipeList))
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun getRecipeInformation(id: Int): Flow<NetworkResult<SpoonacularResponse>> = flow {
         emit(NetworkResult.Loading)
@@ -58,7 +78,7 @@ class FoodRepository @Inject constructor(
 
             emit(NetworkResult.Error(e.message.toString()))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun getErrorMessageFromApi(response: Response<*>) : String{
         val jsonObject = JSONObject(response.errorBody()?.charStream()?.readText().orEmpty())

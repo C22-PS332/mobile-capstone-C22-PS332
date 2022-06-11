@@ -19,13 +19,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.FragmentHomeBinding
-import com.c22ps322.capstone.models.domain.DummyRecipe
 import com.c22ps322.capstone.models.enums.CameraOption
-import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.createFile
 import com.c22ps322.capstone.utils.createTempFile
 import com.c22ps322.capstone.utils.uriToFile
@@ -43,7 +43,7 @@ import java.util.concurrent.Executors
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSavedCallback {
 
-    private val listRecipeViewModel by viewModels<ListRecipeViewModel>()
+    private val listRecipeViewModel by activityViewModels<ListRecipeViewModel>()
 
     private val settingViewModel by viewModels<SettingViewModel>()
 
@@ -224,55 +224,14 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
     }
 
     private fun uploadImage(file: File) {
-        binding?.root?.let {
-            Snackbar.make(
-                it,
-                getString(R.string.capture_successfull),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPreview(file))
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             if (uploadJob.isActive) uploadJob.cancel()
 
-            uploadJob = launch {
-
-                val uploadFlow = listRecipeViewModel.uploadImage(file)
-
-                uploadFlow.collect { result ->
-                    when (result) {
-                        is NetworkResult.Loading -> {
-                            binding?.progressHorizontal?.isVisible = true
-                        }
-
-                        is NetworkResult.Success -> {
-
-                            binding?.progressHorizontal?.hide()
-
-                            showResultSheet(result.data)
-                        }
-
-                        is NetworkResult.Error -> {
-                            binding?.progressHorizontal?.hide()
-
-                            binding?.root?.let {
-                                Snackbar.make(
-                                    it,
-                                    result.message,
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }
-                }
-            }
+            uploadJob = launch { listRecipeViewModel.uploadImage(file) }
         }
-    }
-
-    private fun showResultSheet(listRecipe: ArrayList<DummyRecipe>) {
-        childFragmentManager.findFragmentByTag("ResultSheetFragment")
-            ?: ResultSheetFragment.newInstance(listRecipe)
-                .show(childFragmentManager, "ResultSheetFragment")
     }
 
     private fun animateButton() {

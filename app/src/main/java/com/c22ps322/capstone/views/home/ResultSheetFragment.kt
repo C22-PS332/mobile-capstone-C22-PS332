@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.c22ps322.capstone.adapters.ListRecipeAdapter
 import com.c22ps322.capstone.databinding.FragmentResultSheetBinding
-import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
 import com.c22ps322.capstone.viewmodels.RecipeInformationViewModel
@@ -32,7 +32,7 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
     private val binding get() = _binding
 
-    private var listRecipe: ArrayList<DummyRecipe>? = arrayListOf()
+    private var listRecipe: ArrayList<Recipe>? = arrayListOf()
 
     private val recipeInformationViewModel by viewModels<RecipeInformationViewModel>()
 
@@ -76,8 +76,8 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
         val listRecipeAdapter = ListRecipeAdapter()
 
-        listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<DummyRecipe> {
-            override fun onClick(item: DummyRecipe) {
+        listRecipeAdapter.onItemCallback = object : OnItemCallbackInterface<Recipe> {
+            override fun onClick(item: Recipe) {
 
                 if (detailJob.isActive) detailJob.cancel()
 
@@ -165,7 +165,7 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
         private const val ARG_PARAM = "list-recipe"
 
         @JvmStatic
-        fun newInstance(listRecipe: ArrayList<DummyRecipe>) =
+        fun newInstance(listRecipe: ArrayList<Recipe>) =
             ResultSheetFragment().apply {
                 arguments = Bundle().apply {
                     putParcelableArrayList(ARG_PARAM, listRecipe)

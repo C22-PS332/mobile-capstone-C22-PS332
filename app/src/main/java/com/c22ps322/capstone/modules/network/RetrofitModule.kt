@@ -1,6 +1,7 @@
 package com.c22ps322.capstone.modules.network
 
 import com.c22ps322.capstone.modules.DomainRetrofit
+import com.c22ps322.capstone.modules.ObjectDetectionRetrofit
 import com.c22ps322.capstone.modules.SpoonacularRetrofit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -45,6 +46,15 @@ object RetrofitModule {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(client)
 
+    @ObjectDetectionRetrofit
+    @Singleton
+    @Provides
+    fun provideObjectDetectionRetrofit(moshi: Moshi, client: OkHttpClient): Retrofit.Builder = Retrofit.Builder()
+        .baseUrl(OBJECT_DETECTION_API_URL)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .client(client)
+
+
     @SpoonacularRetrofit
     @Singleton
     @Provides
@@ -54,6 +64,8 @@ object RetrofitModule {
         .client(client)
 
     private const val DOMAIN_API_URL = "https://capstone-backend-vm27eldwkq-uc.a.run.app/api/"
+
+    private const val OBJECT_DETECTION_API_URL = "https://acf5-8-38-147-12.ap.ngrok.io/"
 
     private const val SPOONACULAR_API_URL = "https://api.spoonacular.com/"
 }

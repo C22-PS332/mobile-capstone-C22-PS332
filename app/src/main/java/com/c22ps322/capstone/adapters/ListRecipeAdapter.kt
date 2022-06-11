@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.c22ps322.capstone.R
 import com.c22ps322.capstone.databinding.RecipeCardBinding
-import com.c22ps322.capstone.models.domain.DummyRecipe
+import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
 
-class ListRecipeAdapter : ListAdapter<DummyRecipe, ListRecipeAdapter.ViewHolder>(DiffCallBack) {
+class ListRecipeAdapter : ListAdapter<Recipe, ListRecipeAdapter.ViewHolder>(DiffCallBack) {
 
-    lateinit var onItemCallback: OnItemCallbackInterface<DummyRecipe>
+    lateinit var onItemCallback: OnItemCallbackInterface<Recipe>
 
     inner class ViewHolder(private val binding: RecipeCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(dummyRecipe: DummyRecipe) {
+        fun bind(dummyRecipe: Recipe) {
 
             Glide.with(itemView.context)
                 .load(dummyRecipe.imageUrl)
@@ -27,17 +27,17 @@ class ListRecipeAdapter : ListAdapter<DummyRecipe, ListRecipeAdapter.ViewHolder>
 
             binding.recipeNameTv.text = dummyRecipe.title
 
-            binding.recipeDescTv.text = dummyRecipe.desc
+            binding.recipeDescTv.text = dummyRecipe.summary
 
             binding.recipeCard.setOnClickListener { onItemCallback.onClick(dummyRecipe) }
         }
     }
 
-    object DiffCallBack : DiffUtil.ItemCallback<DummyRecipe>() {
-        override fun areItemsTheSame(oldItem: DummyRecipe, newItem: DummyRecipe) =
+    object DiffCallBack : DiffUtil.ItemCallback<Recipe>() {
+        override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: DummyRecipe, newItem: DummyRecipe) =
+        override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe) =
             oldItem == newItem
     }
 
