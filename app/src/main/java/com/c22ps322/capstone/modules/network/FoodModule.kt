@@ -1,6 +1,6 @@
 package com.c22ps322.capstone.modules.network
 
-import com.c22ps322.capstone.modules.DomainRetrofit
+import com.c22ps322.capstone.modules.ObjectDetectionRetrofit
 import com.c22ps322.capstone.modules.SpoonacularRetrofit
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,7 @@ object FoodModule {
 
     @Singleton
     @Provides
-    fun provideDomainService(@DomainRetrofit retrofit: Retrofit.Builder): DomainFoodService =
+    fun provideObjectDetectionService(@ObjectDetectionRetrofit retrofit: Retrofit.Builder): DomainFoodService =
         retrofit.build().create(DomainFoodService::class.java)
 
     @Singleton

@@ -9,3 +9,7 @@ annotation class DomainRetrofit
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class SpoonacularRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ObjectDetectionRetrofit
