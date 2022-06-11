@@ -17,9 +17,11 @@ import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.viewmodels.ListRecipeViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class PreviewFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentPreviewBinding? = null
