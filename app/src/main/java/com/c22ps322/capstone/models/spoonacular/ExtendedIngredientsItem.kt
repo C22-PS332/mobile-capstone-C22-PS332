@@ -8,13 +8,10 @@ import kotlinx.parcelize.Parcelize
 data class ExtendedIngredientsItem(
 
 	@Json(name="image")
-	val image: String,
-
-	@Json(name="original")
-	val original: String,
+	val image: String?,
 
 	@Json(name="name")
-	val name: String,
+	val name: String?,
 
 	@Json(name="id")
 	val id: Int
