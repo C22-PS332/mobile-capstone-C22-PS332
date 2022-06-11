@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -31,7 +32,6 @@ import com.c22ps322.capstone.utils.createTempFile
 import com.c22ps322.capstone.utils.uriToFile
 import com.c22ps322.capstone.viewmodels.ListRecipeViewModel
 import com.c22ps322.capstone.viewmodels.SettingViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -140,13 +140,11 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
 
             } catch (e: Exception) {
 
-                binding?.root?.let {
-                    Snackbar.make(
-                        it,
-                        getString(R.string.failed_to_start_camera),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.failed_to_start_camera),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }, ContextCompat.getMainExecutor(requireContext()))
@@ -251,12 +249,10 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
     }
 
     override fun onError(exception: ImageCaptureException) {
-        binding?.root?.let {
-            Snackbar.make(
-                it,
-                getString(R.string.failed_to_take_picture),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.failed_to_take_picture),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

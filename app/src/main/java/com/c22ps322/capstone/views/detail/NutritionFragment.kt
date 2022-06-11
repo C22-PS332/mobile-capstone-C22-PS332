@@ -124,10 +124,6 @@ class NutritionFragment : Fragment() {
                 tableRow
             )
 
-            binding?.tableLayout?.invalidate()
-
-            binding?.tableLayout?.refreshDrawableState()
-
             return
         }
 

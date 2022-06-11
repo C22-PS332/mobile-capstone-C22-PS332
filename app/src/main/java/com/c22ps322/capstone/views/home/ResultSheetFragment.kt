@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.c22ps322.capstone.R
 import com.c22ps322.capstone.adapters.ListRecipeAdapter
 import com.c22ps322.capstone.databinding.FragmentResultSheetBinding
 import com.c22ps322.capstone.models.domain.Recipe
@@ -17,10 +19,8 @@ import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
 import com.c22ps322.capstone.viewmodels.RecipeInformationViewModel
 import com.c22ps322.capstone.views.DetailFoodActivity
-import com.c22ps322.capstone.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -115,13 +115,11 @@ class ResultSheetFragment : BottomSheetDialogFragment() {
 
                                     binding?.progressHorizontal?.hide()
 
-                                    binding?.root?.let {
-                                        Snackbar.make(
-                                            it,
-                                            result.message,
-                                            Snackbar.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                    Toast.makeText(
+                                        requireContext(),
+                                        result.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         }
