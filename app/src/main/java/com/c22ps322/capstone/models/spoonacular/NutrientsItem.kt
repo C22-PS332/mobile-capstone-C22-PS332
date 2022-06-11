@@ -8,14 +8,14 @@ import kotlinx.parcelize.Parcelize
 data class NutrientsItem(
 
 	@Json(name="amount")
-	val amount: Double,
+	val amount: Double?,
 
 	@Json(name="unit")
-	val unit: String,
+	val unit: String?,
 
 	@Json(name="percentOfDailyNeeds")
-	val percentOfDailyNeeds: Double,
+	val percentOfDailyNeeds: Double?,
 
 	@Json(name="name")
-	val name: String
+	val name: String?
 ): Parcelable

@@ -6,13 +6,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Nutrition(
-//
-//	@Json(name="caloricBreakdown")
-//	val caloricBreakdown: CaloricBreakdown,
-
 	@Json(name="weightPerServing")
-	val weightPerServing: WeightPerServing,
+	val weightPerServing: WeightPerServing?,
 
 	@Json(name="nutrients")
-	val nutrients: List<NutrientsItem>
+	val nutrients: List<NutrientsItem>?
 ): Parcelable

@@ -8,8 +8,8 @@ import kotlinx.parcelize.Parcelize
 data class WeightPerServing(
 
 	@Json(name="amount")
-	val amount: Double,
+	val amount: Double?,
 
 	@Json(name="unit")
-	val unit: String
+	val unit: String?
 ): Parcelable
