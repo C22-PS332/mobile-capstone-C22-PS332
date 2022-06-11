@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,7 +17,6 @@ import com.c22ps322.capstone.databinding.FragmentPreviewBinding
 import com.c22ps322.capstone.models.domain.Recipe
 import com.c22ps322.capstone.models.enums.NetworkResult
 import com.c22ps322.capstone.viewmodels.ListRecipeViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -85,13 +85,11 @@ class PreviewFragment : Fragment(), View.OnClickListener {
 
                             binding?.progressHorizontal?.hide()
 
-                            binding?.root?.let {
-                                Snackbar.make(
-                                    it,
-                                    result.message,
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
+                            Toast.makeText(
+                                requireContext(),
+                                result.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                         }
                     }

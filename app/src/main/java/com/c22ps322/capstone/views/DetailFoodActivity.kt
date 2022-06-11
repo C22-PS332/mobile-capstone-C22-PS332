@@ -1,6 +1,7 @@
 package com.c22ps322.capstone.views
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -11,7 +12,6 @@ import com.c22ps322.capstone.databinding.ActivityDetailFoodBinding
 import com.c22ps322.capstone.models.spoonacular.ExtendedIngredientsItem
 import com.c22ps322.capstone.models.spoonacular.SpoonacularResponse
 import com.c22ps322.capstone.utils.OnItemCallbackInterface
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,10 +47,10 @@ class DetailFoodActivity : AppCompatActivity() {
         listIngredientAdapter.onItemCallbackInterface =
             object : OnItemCallbackInterface<ExtendedIngredientsItem> {
                 override fun onClick(item: ExtendedIngredientsItem) {
-                    Snackbar.make(
-                        binding.root,
+                    Toast.makeText(
+                        this@DetailFoodActivity,
                         item.name,
-                        Snackbar.LENGTH_SHORT
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
