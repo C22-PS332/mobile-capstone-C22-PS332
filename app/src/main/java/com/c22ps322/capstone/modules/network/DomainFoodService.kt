@@ -11,7 +11,7 @@ import retrofit2.http.Part
 interface DomainFoodService {
 
     @Multipart
-    @POST("api/predict")
+    @POST("predict")
     suspend fun uploadImage(
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part
