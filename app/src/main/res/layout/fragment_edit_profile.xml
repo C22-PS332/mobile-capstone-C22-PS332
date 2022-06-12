@@ -68,7 +68,7 @@
                 app:errorTextColor="?attr/colorPrimary"
                 app:hintTextAppearance="@style/CustomLabelEditText">
 
-                <com.c22ps322.capstone.views.component.CustomEditText
+                <com.c22ps322.mealsnap.views.component.CustomEditText
                     android:id="@+id/full_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 app:errorTextColor="?attr/colorPrimary"
                 app:hintTextAppearance="@style/CustomLabelEditText">
 
-                <com.c22ps322.capstone.views.component.CustomEditText
+                <com.c22ps322.mealsnap.views.component.CustomEditText
                     android:id="@+id/contact_number_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 app:errorTextColor="?attr/colorPrimary"
                 app:hintTextAppearance="@style/CustomLabelEditText">
 
-                <com.c22ps322.capstone.views.component.CustomEditText
+                <com.c22ps322.mealsnap.views.component.CustomEditText
                     android:id="@+id/email_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

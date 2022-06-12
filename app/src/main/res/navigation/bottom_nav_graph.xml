@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.c22ps322.capstone.views.home.HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        android:name="com.c22ps322.mealsnap.views.home.HomeFragment"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_preview"
             app:destination="@id/preview" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.c22ps322.capstone.views.profile.ProfileFragment"
-        tools:layout="@layout/fragment_profile" >
+        android:name="com.c22ps322.mealsnap.views.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -29,12 +29,12 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.c22ps322.capstone.views.profile.EditProfileFragment"
+        android:name="com.c22ps322.mealsnap.views.profile.EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.c22ps322.capstone.views.profile.ChangePasswordFragment"
-        tools:layout="@layout/fragment_change_password" >
+        android:name="com.c22ps322.mealsnap.views.profile.ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password">
         <action
             android:id="@+id/action_changePasswordFragment_to_profileFragment"
             app:destination="@id/profileFragment"
@@ -43,12 +43,12 @@
     </fragment>
     <fragment
         android:id="@+id/aboutUsFragment"
-        android:name="com.c22ps322.capstone.views.profile.AboutUsFragment"
+        android:name="com.c22ps322.mealsnap.views.profile.AboutUsFragment"
         tools:layout="@layout/fragment_about_us" />
     <fragment
         android:id="@+id/preview"
-        android:name="com.c22ps322.capstone.views.home.PreviewFragment"
-        android:label="Preview" >
+        android:name="com.c22ps322.mealsnap.views.home.PreviewFragment"
+        android:label="Preview">
         <action
             android:id="@+id/action_preview_to_homeFragment"
             app:destination="@id/homeFragment"

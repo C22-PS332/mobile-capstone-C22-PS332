@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Capstone Application</string>
+    <string name="app_name">Mealsnap</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="capture_image">Ambil Foto</string>
     <string name="settings">Pengaturan</string>
