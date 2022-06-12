@@ -33,6 +33,4 @@ interface UserService {
         // new password
         @Body param: RequestBody
     ): Response<ChangePasswordResponse>
-
-    //missing change profile
 }
