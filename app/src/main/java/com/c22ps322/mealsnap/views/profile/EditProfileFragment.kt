@@ -55,7 +55,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun bindUserInformation() {
-        val email = profileViewModel.getEmail().orEmpty()
+        val email = profileViewModel.getEmail() ?: return
 
         binding?.usernameTv?.text = email.substringBefore("@")
     }
