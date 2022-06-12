@@ -17,7 +17,7 @@ import com.c22ps322.mealsnap.databinding.FragmentProfileBinding
 import com.c22ps322.mealsnap.models.enums.CameraOption
 import com.c22ps322.mealsnap.viewmodels.ProfileViewModel
 import com.c22ps322.mealsnap.viewmodels.SettingViewModel
-import com.c22ps322.mealsnap.views.WelcomeActivity
+import com.c22ps322.mealsnap.views.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -125,7 +125,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private fun navigateToFirstScreen() {
         profileViewModel.logout()
 
-        val intent = Intent(requireContext(), WelcomeActivity::class.java)
+        val intent = Intent(requireContext(), LoginActivity::class.java)
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 
