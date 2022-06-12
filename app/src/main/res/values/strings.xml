@@ -57,12 +57,12 @@
     <string name="total_weight">Berat total</string>
     <string name="error_loading_data">Error Loading Data</string>
     <string name="title_menu_1">Get to Know Your Food with a Single Capture</string>
-    <string name="desc_menu_1">Lorem ipsum dolor sit amesadatat, asdconsectetur adipiscing elit.</string>
+    <string name="desc_menu_1">With a single-click, you can get our recommendations and the meal detail</string>
     <string name="get_started">Get Started</string>
     <string name="title_menu_2">Give Best Nutrients to Your Kids</string>
-    <string name="desc_menu_2">Lorem ipsum dolor sit amesadatat, asdconsectetur adipiscing elit.</string>
+    <string name="desc_menu_2">Support your children\'s golden age with our healthy recipes</string>
     <string name="title_menu_3">Let\'s Have a Healthier Life With Us</string>
-    <string name="desc_menu_3">Lorem ipsum dolor sit amesadatat, asdconsectetur adipiscing elit.</string>
+    <string name="desc_menu_3">We provide menus that will keep your body fit and healthy</string>
     <string name="amount">Jumlah</string>
     <string name="more_detail">Detail selengkapnya</string>
     <string name="ingredients">Bahan</string>
