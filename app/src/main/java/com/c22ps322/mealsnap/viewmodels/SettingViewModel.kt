@@ -19,4 +19,12 @@ class SettingViewModel @Inject constructor(
             appPreferences.saveCameraOption(cameraOption)
         }
     }
+
+    fun isFirstTime() = appPreferences.isFirstOpen().asLiveData()
+
+    fun setAfterFirstOpen() {
+        viewModelScope.launch {
+            appPreferences.setAfterFirstOpen()
+        }
+    }
 }
