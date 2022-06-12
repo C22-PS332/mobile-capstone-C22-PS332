@@ -1,8 +1,10 @@
 package com.c22ps322.mealsnap.views.home
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -94,9 +96,9 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
                     captureBtn.setOnClickListener(this@HomeFragment)
                 }
 
-                startCameraX()
-
                 cameraExecutor = Executors.newSingleThreadExecutor()
+
+                requestCameraPermissionThenLaunchCameraX()
             }
 
             CameraOption.SYSTEM -> {
@@ -164,7 +166,7 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
         when (v.id) {
             R.id.capture_btn -> takePhoto()
 
-            R.id.open_system_camera_btn -> openCameraSystem()
+            R.id.open_system_camera_btn -> requestCameraPermissionThenLaunchCameraSystem()
 
             else -> return
         }
@@ -266,5 +268,57 @@ class HomeFragment : Fragment(), View.OnClickListener, ImageCapture.OnImageSaved
             getString(R.string.failed_to_take_picture),
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun requestCameraPermissionThenLaunchCameraX() {
+        if (isCameraPermissionGranted())
+            startCameraX()
+        else
+            requestPermissionForCameraX.launch(
+                REQUIRED_CAMERA_PERMISSION
+            )
+    }
+
+    private fun requestCameraPermissionThenLaunchCameraSystem() {
+        if (isCameraPermissionGranted())
+            openCameraSystem()
+        else
+            requestPermissionForCameraSystem.launch(
+                REQUIRED_CAMERA_PERMISSION
+            )
+    }
+
+    private val requestPermissionForCameraSystem =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
+            if (permission == false)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.permission_denied),
+                    Toast.LENGTH_SHORT
+                ).show()
+            else
+                openCameraSystem()
+        }
+
+    private val requestPermissionForCameraX =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
+            if (permission == false)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.permission_denied),
+                    Toast.LENGTH_SHORT
+                ).show()
+            else
+                startCameraX()
+        }
+
+    private fun isCameraPermissionGranted() = ContextCompat.checkSelfPermission(
+        requireContext(),
+        REQUIRED_CAMERA_PERMISSION
+    ) == PackageManager.PERMISSION_GRANTED
+
+
+    companion object {
+        private const val REQUIRED_CAMERA_PERMISSION = Manifest.permission.CAMERA
     }
 }
