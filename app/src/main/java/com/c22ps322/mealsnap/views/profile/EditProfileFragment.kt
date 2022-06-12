@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,7 +20,10 @@ import com.c22ps322.mealsnap.R
 import com.c22ps322.mealsnap.databinding.FragmentEditProfileBinding
 import com.c22ps322.mealsnap.utils.showErrorInput
 import com.c22ps322.mealsnap.utils.showSuccessValidationInput
+import com.c22ps322.mealsnap.viewmodels.ProfileViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditProfileFragment : Fragment() {
 
     private var _binding: FragmentEditProfileBinding? = null
@@ -27,6 +31,8 @@ class EditProfileFragment : Fragment() {
     private val binding get() = _binding
 
     private lateinit var navController: NavController
+
+    private val profileViewModel by viewModels<ProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +49,15 @@ class EditProfileFragment : Fragment() {
 
         setupNavigation()
 
+        bindUserInformation()
+
         setupInputValidation()
+    }
+
+    private fun bindUserInformation() {
+        val email = profileViewModel.getEmail().orEmpty()
+
+        binding?.usernameTv?.text = email.substringBefore("@")
     }
 
     override fun onDestroyView() {
