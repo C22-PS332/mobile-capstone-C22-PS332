@@ -24,7 +24,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/registrasi"
                 android:textSize="24sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/subtitle_tv"
@@ -33,7 +33,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/daftar_dan_mulai_eksplorasimu"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/name_label_tv"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
                 app:helperTextTextColor="@color/dark_orange"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name_et"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
                 app:helperTextTextColor="@color/dark_orange"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_et"
@@ -118,7 +118,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:hintEnabled="false"
                 app:helperTextTextColor="@color/dark_orange"
-                app:endIconMode="password_toggle" >
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_et"
@@ -131,8 +131,7 @@
                     android:paddingVertical="15dp"
                     android:background="@drawable/background"
                     android:inputType="textPassword"
-                    android:hint="@string/password_hint"
-                    />
+                    android:hint="@string/password_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,7 +163,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="14sp"
                     android:layout_marginEnd="5sp"
-                    android:text="@string/sudah_punya_akun"/>
+                    android:text="@string/sudah_punya_akun" />
 
                 <TextView
                     android:id="@+id/login_now_tv"
@@ -173,7 +172,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:textSize="14sp"
                     android:textColor="@color/dark_orange"
-                    android:text="@string/masuk_sekarang"/>
+                    android:text="@string/masuk_sekarang" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

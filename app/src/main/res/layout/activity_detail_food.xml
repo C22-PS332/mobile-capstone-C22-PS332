@@ -132,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/back"
-                        android:textAppearance="@style/CustomAppBarTitleTextAppearance"/>
+                        android:textAppearance="@style/CustomAppBarTitleTextAppearance" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
