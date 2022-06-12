@@ -61,6 +61,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
             binding?.cameraSelectedTv?.text = it
         }
+
+        val email = profileViewModel.getEmail().orEmpty()
+
+        binding?.usernameTv?.text = email.substringBefore("@")
+
+        binding?.emailTv?.text = email
     }
 
     private fun setupNavigation() {
